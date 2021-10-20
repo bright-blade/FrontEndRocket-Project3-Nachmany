@@ -25,20 +25,22 @@ function next(){
         }
         if(p == 3){
                 document.getElementById("id_continue").classList.add("d-none");  
-                validaPart_2();  
+                // validaPart_2();  
         }
         if(p == 2){
                 document.getElementById("id_per_dtl").classList.add("d-none");  
                 document.getElementById("id_my_dtl").classList.remove("d-none");
-                validaPart_1();  
+                // validaPart_1();  
         } else{
                 document.getElementById("id_per_dtl").classList.remove("d-none");  
                 document.getElementById("id_my_dtl").classList.add("d-none");   
         }
         if(p == 1 || p == 2 ){
                 document.getElementById("id_1_2").classList.remove("d-none");
+                console.log("in page_1_2")
         }else{
                 document.getElementById("id_1_2").classList.add("d-none");
+                console.log("not in page_1_2")
         }
         
 }
@@ -77,6 +79,7 @@ function pre(){
 function addNewCard(){
         document.querySelector("#id_label_sec").classList.remove("d-none");
         document.querySelector("#id_added").classList.remove("d-none");
+        document.querySelector("#id_label_custom_2").classList.remove("d-none");
         document.querySelector("#id_add_card").classList.add("d-none");
         document.querySelector("#id_one_or_two").innerHTML = "2";
         
@@ -84,6 +87,7 @@ function addNewCard(){
 function deleteNewCard(){
         document.querySelector("#id_label_sec").classList.add("d-none");
         document.querySelector("#id_added").classList.add("d-none");
+        document.querySelector("#id_label_custom_2").classList.add("d-none");
         document.querySelector("#id_add_card").classList.remove("d-none");
         document.querySelector("#id_one_or_two").innerHTML = "1";
         
@@ -209,20 +213,93 @@ function validaLast(){
         validaRed(x,y.slice(3,-5));
 }
 function validaCompany(){
-        // let z = document.querySelector("id_company_name");
         let x = document.querySelector("#id_company_name").value;
         let y = document.querySelector("#id_company_name").id;
         validaRed(x,y.slice(3,-5));
 }
 function validaStructure(){
-        // let z = document.querySelector("id_company_name");
         let x = document.querySelector("#id_structure_name").value;
         let y = document.querySelector("#id_structure_name").id;
         validaRed(x,y.slice(3,-5));
 }
 function validaAssociation(){
-        // let z = document.querySelector("id_company_name");
         let x = document.querySelector("#id_association_name").value;
         let y = document.querySelector("#id_association_name").id;
         validaRed(x,y.slice(3,-5));
 }
+// -----------validate of date---------//
+function redDate(y){
+        var d =document.querySelector("#id_date_of_birdh_"+y).value;
+        let year = d.slice(0,4);
+        let month = d.slice(5,7);
+        let day = d.slice(8,10);
+    
+        const today = new Date();
+        const toY = today.getFullYear()-18;
+        const toM = today.getMonth()+1;
+        const toD = today.getDate();
+            
+        if(year < toY ){
+            document.getElementById("id_dbo_invalid_"+y).classList.add("d-none");
+            document.getElementById("id_dbo_label_"+y).classList.remove("red");
+            document.getElementById("id_date_of_birdh_"+y).classList.remove("red");
+        }else if(year == toY && month < toM){
+            document.getElementById("id_dbo_invalid_"+y).classList.add("d-none");
+            document.getElementById("id_dbo_label_"+y).classList.remove("red");
+            document.getElementById("id_date_of_birdh_"+y).classList.remove("red");
+        }else if(year == toY && month == toM && day <= toD){
+            document.getElementById("id_dbo_invalid_"+y).classList.add("d-none");
+            document.getElementById("id_dbo_label_"+y).classList.remove("red");
+            document.getElementById("id_date_of_birdh_"+y).classList.remove("red");
+        }else{
+            document.getElementById("id_dbo_invalid_"+y).classList.remove("d-none");
+            document.getElementById("id_dbo_label_"+y).classList.add("red");
+            document.getElementById("id_date_of_birdh_"+y).classList.add("red");
+    }
+    };
+    
+    function validaDOB_1(){
+        let x = document.querySelector("#id_date_of_birdh_1").value;
+        let y = document.querySelector("#id_date_of_birdh_1").id;
+        redDate(y.slice(17 ,18));
+    }
+    function validaDOB_2(){
+        let x = document.querySelector("#id_date_of_birdh_2").value;
+        let y = document.querySelector("#id_date_of_birdh_2").id;
+        redDate(y.slice(17 ,18));
+    }
+    function validaDOB_3(){
+        let x = document.querySelector("#id_date_of_birdh_3").value;
+        let y = document.querySelector("#id_date_of_birdh_3").id;
+        redDate(y.slice(17 ,18));
+    }
+// ---------------full name dosn't to long
+function longF(){
+        let f = document.querySelector("#id_first_name").value;
+        let l = document.querySelector("#id_last_name").value;
+        let x = 26 -  l.length;
+        let y = 26 -  f.length;
+        document.querySelector("#id_first_name").maxLength = x ;
+        document.querySelector("#id_last_name").maxLength = y ;
+        if( (f.length + l.length) == 26 ){
+            alert("Full name length is longer than 26 characters.")
+        }
+    }
+    function longC(){
+        let f = document.querySelector("#id_company_name").value;
+        let l = document.querySelector("#id_structure_name").value;
+        let x = 26 -  l.length;
+        let y = 26 -  f.length;
+        document.querySelector("#id_company_name").maxLength = x ;
+        document.querySelector("#id_structure_name").maxLength = y ;
+        if( (f.length + l.length) == 26 ){
+            alert("Full name length is longer than 26 characters.")
+        }
+    }
+    function longA(){
+        let f = document.querySelector("#id_association_name").value;
+        if( (f.length) == 20 ){
+            alert("Please enter no more than 20 characters.")
+        }
+    
+    }
