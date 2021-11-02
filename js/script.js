@@ -1,12 +1,15 @@
 window.onload = function(){
         console.log("js working");
-        
-        // cardCount();
+        isSeed();
+        cardCount();
+        if_dif();
 }
 
+    
+// -----------menu of small screan---------------//
 function menu(){
-        let element = document.getElementById("id_nav");
-        element.classList.toggle("d-none");
+        let bars = document.getElementById("id_nav");
+        bars.classList.toggle("d-none");
 }
 
 // -----------Scroll through pages---------------//
@@ -21,7 +24,8 @@ function next(){
         }
         if(p == 3){
                 document.getElementById("id_continue").classList.add("d-none");  
-                // validaPart_2();  
+                // validaPart_2();
+                mailDetails()    
         }
         if(p == 2){
                 document.getElementById("id_per_dtl").classList.add("d-none");  
@@ -33,11 +37,9 @@ function next(){
         }
         if(p == 1 || p == 2 ){
                 document.getElementById("id_1_2").classList.remove("d-none");
-                console.log("in page_1_2")
                 dateOnCard();
         }else{
                 document.getElementById("id_1_2").classList.add("d-none");
-                console.log("not in page_1_2")
         }
         
 }
@@ -53,7 +55,8 @@ function pre(){
                 
         }
         if(p == 3){
-                document.getElementById("id_continue").classList.add("d-none");  
+                document.getElementById("id_continue").classList.add("d-none");
+                
         }else{
                 document.getElementById("id_continue").classList.remove("d-none");  
                 
@@ -72,21 +75,42 @@ function pre(){
         }
         
 }
+
+// ----------- checkbox if diffrent ---------------//
+if_dif = () => {
+        let checkbox = document.querySelector("#id_delivery");
+        if (checkbox.checked == true) {
+            
+            $(".if_dif").show();
+        } else {
+            $(".if_dif").hide();
+        }
+    }
 // ----------- add Card ---------------//
 function addNewCard(){
-        document.querySelector("#id_label_sec").classList.remove("d-none");
+        // document.querySelector("#id_label_sec").classList.remove("d-none");
         document.querySelector("#id_added").classList.remove("d-none");
         document.querySelector("#id_label_custom_2").classList.remove("d-none");
         document.querySelector("#id_add_card").classList.add("d-none");
         document.querySelector("#id_one_or_two").innerHTML = "2";
+
+        let i =2;
+        document.querySelector("#id_cards_count").innerHTML += 
+        '<label class="col-12 mt-3" for="id_deposit_'+i+'">Card #'+i+' First Deposit<select name="deposit_'+i+'" id="id_deposit_'+i+'" class="col-12"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
+ 
+        
         
 }
 function deleteNewCard(){
-        document.querySelector("#id_label_sec").classList.add("d-none");
+        // document.querySelector("#id_label_sec").classList.add("d-none");
         document.querySelector("#id_added").classList.add("d-none");
         document.querySelector("#id_label_custom_2").classList.add("d-none");
         document.querySelector("#id_add_card").classList.remove("d-none");
         document.querySelector("#id_one_or_two").innerHTML = "1";
+
+        document.querySelector("#id_cards_count").innerHTML = 
+        '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
+
         
 }
 // ----------- change gender ---------------//
@@ -127,10 +151,12 @@ function onAssociation(){
 function changeFN(){
         let f = document.getElementById("id_first_name").value;
         document.getElementById("id_f_name_card").innerHTML = f;
+        document.getElementById("id_first_summ").innerHTML = f+" ";
 }
 function changeLN(){
         let f = document.getElementById("id_last_name").value;
         document.getElementById("id_l_name_card").innerHTML = f;
+        document.getElementById("id_last_summ").innerHTML = f;
 }
 function changeCos(){
         let f = document.getElementById("id_custom").value;
@@ -173,16 +199,24 @@ function dateOnCard(){
 function cardCount(){
         let count = document.querySelector("#id_select").value;
         document.querySelector("#id_indicate").innerHTML =
-         '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom()"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" ><span class="french_span pointer"></span></label></div>';
-
-        for(i=2 ; i<=count ; i++){
+        '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom()"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" ><span class="french_span pointer"></span></label></div>';
+        
+        document.querySelector("#id_cards_count").innerHTML = 
+        '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
+        
+        for(let i = 2 ; i<=count ; i++){
                 document.querySelector("#id_indicate").innerHTML +=
-                 '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_'+i+'" type="text"></div><div id="id_card_label'+i+'" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-'+i+'"><input id="id_uk-'+i+'" class="class_uk" type="radio" name="flag'+i+'"><span class="uk_span pointer"></span></label><label for="id_french-'+i+'"><input id="id_french-'+i+'" class="class_fr" type="radio" name="flag'+i+'"><span class="french_span pointer"></span></label></div>'
+                '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_'+i+'" type="text"></div><div id="id_card_label'+i+'" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-'+i+'"><input id="id_uk-'+i+'" class="class_uk" type="radio" name="flag'+i+'"><span class="uk_span pointer"></span></label><label for="id_french-'+i+'"><input id="id_french-'+i+'" class="class_fr" type="radio" name="flag'+i+'"><span class="french_span pointer"></span></label></div>';
+                
+                document.querySelector("#id_cards_count").innerHTML += 
+                '<label class="col-12 mt-3" for="id_deposit_'+i+'">Card #'+i+' First Deposit<select name="deposit_'+i+'" id="id_deposit_'+i+'" class="col-12"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
+                
+                
         }
 }
 
+// --------details summary changes---------//
 
 
 
 
-    

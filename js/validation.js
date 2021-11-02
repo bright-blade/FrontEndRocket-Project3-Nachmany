@@ -137,7 +137,7 @@ function validaPhone(){
 function phoneNumTest(){
     var phone = document.querySelector("#id_phone_name");
     let y = phone.id.slice(3,-5)
-        const phoneType = /^\(?[0-9])$/;
+        const phoneType = /^\?[0-9]$/;
         if(phoneType.test(phone)){
             document.getElementById("id_"+y+"_invalid2").classList.add("d-none");
             document.getElementById("id_p_"+y).classList.remove("red");
