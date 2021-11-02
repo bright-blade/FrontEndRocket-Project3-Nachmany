@@ -377,3 +377,8 @@ input.red{
 p.red, label.red{
     color: #dc3545;
 }
+
+
+.if_dif{
+    display: none;
+}

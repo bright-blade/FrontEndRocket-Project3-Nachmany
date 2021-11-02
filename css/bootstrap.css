@@ -2187,6 +2187,9 @@ progress {
   appearance: none;
   text-transform: capitalize;
 }
+[type=email]{
+  text-transform: lowercase;
+}
 
 .form-control {
   display: block;
