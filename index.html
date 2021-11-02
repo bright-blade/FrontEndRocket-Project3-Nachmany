@@ -9,11 +9,13 @@
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/uicons-regular-rounded/css/uicons-regular-rounded.css'>
     <link rel="stylesheet" href="css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-3.6.0.js"></script>
     <script src="js/script.js"></script>
     <script src="js/try.js"></script>
+    <script src="js/try2.js"></script>
     <script src="js/validation.js"></script>
     <script src="js/correctmail.js"></script>
-    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="js/bootstrap.bundle.js"></script>
 </head>
 <body>
     <header class="col-12 ">
@@ -116,7 +118,7 @@
                         my details
                         <p>&#8212;</p>
                     </h1>
-                    <form action="get" class="col-8 col-md-12 mx-auto" autocomplete="off"> 
+                    <form action="get" class="col-8 col-md-12 mx-auto" > 
                         <div id="p-1" class="part_1 d-none">
                             <div>
                                 <span class="text-capitalize me-3">title</span>
@@ -129,7 +131,7 @@
                                 <div class="d-non container p-0 d-md-flex flex-wrap">
                                 <label for="id_first_name" class="mt-3 col-12 col-md-6 pe-md-2 order-0">
                                     <p id="id_p_first" class="mb-0 ">First Name</p>
-                                    <input type="text" id="id_first_name" class="col-12" oninput="longF(),changeFN(),validaFirst()" onblur="validaFirst()" >
+                                    <input type="text" id="id_first_name" class="col-12 jx0" oninput="longF(),changeFN(),validaFirst()" onblur="validaFirst()" >
                                     <div id="id_first_invalid" class="invalid-feedback d-none">
                                         this field is required.
                                     </div>
@@ -137,7 +139,7 @@
             
                                 <label for="id_last_name" class="mt-3 col-12 col-md-6 ps-md-2 order-1">
                                     <p id="id_p_last" class="mb-0">Last Name</p>
-                                    <input type="text" id="id_last_name" class="col-12"  oninput="longF(),changeLN(),validaLast()" onblur="validaLast()">
+                                    <input type="text" id="id_last_name" class="col-12 jx1"  oninput="longF(),changeLN(),validaLast()" onblur="validaLast()">
                                     <div id="id_last_invalid" class="invalid-feedback d-none">
                                         this field is required.
                                     </div>
@@ -145,7 +147,7 @@
             
                                 <label for="id_custom" class="mt-3 col-12 col-md-6 pe-md-2 order-2">
                                     <p class="mb-0">Custom Field</p>
-                                    <input type="text" id="id_custom" class="col-12" oninput="changeCos()">
+                                    <input type="text" id="id_custom" class="col-12 jx2" oninput="changeCos()">
                                 </label>
             
                                 
@@ -182,24 +184,22 @@
                                         <span id="id_delete" onclick="deleteNewCard()" class="pointer btn btn-danger text-uppercase  float-end d-md-">Delete Card</span>
                                     </wrapper>
                                 </div>        
-                                <!-- <div class="col-12"> -->
                                     <label id="id_dbo_label_1" class="col-12 col-md-6 mt-3 pe-md-2 order-4" for="id_date_of_birdh_1">
                                         Date Of Birth
-                                        <input id="id_date_of_birdh_1"  class="d-block col-12 " type="date" oninput="validaDOB_1()">
+                                        <input id="id_date_of_birdh_1"  class="d-block col-12 jx3" type="date" oninput="validaDOB_1()">
                                         <p class="small">(For example: 31/12/1970)</p>
                                         <div id="id_dbo_invalid_1" class="invalid-feedback d-none">
                                             Please enter a valid date.<br>
                                             Must be at least 18 years old.
                                         </div>
                                     </label>
-                                <!-- </div> -->
                                 </div>
                             </div>
                             <div id="id_cprt" class="d-none">
                                 <div class="d-md-flex flex-wrap">
                                 <label for="id_company_name" class="col-12 col-md-6 pe-md-2 mt-3">
                                     <p id="id_p_company" class="mb-0">Company Name</p>
-                                    <input type="text" id="id_company_name" class="col-12" oninput="longC(),changeCom(),validaCompany()" onblur="validaCompany()">
+                                    <input type="text" id="id_company_name" class="col-12 jx4" oninput="longC(),changeCom(),validaCompany()" onblur="validaCompany()">
                                     <div id="id_company_invalid" class="invalid-feedback d-none">
                                         this field is required.
                                     </div>
@@ -207,7 +207,7 @@
             
                                 <label for="id_structure_name" class="col-12 col-md-6 ps-md-2 mt-3">
                                     <p id="id_p_structure" class="mb-0">Corporate Structure</p>
-                                    <input type="text" id="id_structure_name" class="col-12" oninput="longC(),changeStrc(),validaStructure()" onblur="validaStructure()">
+                                    <input type="text" id="id_structure_name" class="col-12 jx5" oninput="longC(),changeStrc(),validaStructure()" onblur="validaStructure()">
                                     <div id="id_structure_invalid" class="invalid-feedback d-none">
                                         this field is required.
                                     </div>
@@ -215,7 +215,7 @@
 
                                 <label id="id_dbo_label_2" class="col-12 col-md-6 pe-md-2 mt-3" for="id_date_of_birdh_2">
                                     Date of birth person in charge
-                                    <input id="id_date_of_birdh_2"  class="col-12" type="date"  oninput="validaDOB_2()">
+                                    <input id="id_date_of_birdh_2"  class="col-12 jx3" type="date"  oninput="validaDOB_2()">
                                     <p class="small">(For example: 31/12/1970)</p>
                                     <div id="id_dbo_invalid_2" class="invalid-feedback d-none">
                                         Please enter a valid date.<br>
@@ -228,7 +228,7 @@
                                 <div class="">
                                 <label for="id_association_name" class="col-12 col-md-6 pe-md-2 mt-3">
                                     <p id="id_p_association" class="mb-0">Association Name</p>
-                                    <input type="text" maxlength="20" id="id_association_name" class="col-12" oninput="longA(),changeAssc(),validaAssociation()" onblur="validaAssociation()">
+                                    <input type="text" maxlength="20" id="id_association_name" class="col-12 jx6" oninput="longA(),changeAssc(),validaAssociation()" onblur="validaAssociation()">
                                     <div id="id_association_invalid" class="invalid-feedback d-none">
                                         this field is required.
                                     </div>
@@ -236,7 +236,7 @@
 
                                 <label id="id_dbo_label_3" class="col-12 col-md-6 pe-md-2 mt-3" for="id_date_of_birdh_3">
                                     Date Of Birth
-                                    <input id="id_date_of_birdh_3"  class="d-block col-12" type="date" oninput="validaDOB_3()">
+                                    <input id="id_date_of_birdh_3"  class="d-block col-12 jx3" type="date" oninput="validaDOB_3()">
                                     <p class="small">(For example: 31/12/1970)</p>
                                     <div id="id_dbo_invalid_3" class="invalid-feedback d-none">
                                         Please enter a valid date.<br>
@@ -271,7 +271,7 @@
                                     <div id="id_indicate" class="mt-3 align-items-end container col-12 p-0">
                                         <div class="me-3 me-md-0 col-8  col-md-6 pe-md-2">
                                             <label for="">Indicate here the desired customization</label>
-                                            <input id="id_here_1" type="text" oninput="changecoscom()">
+                                            <input id="id_here_1" class="jx2" type="text" oninput="changecoscom()">
                                         </div>
 
                                         <div id="id_card_label" class="col-4 col-md-6 ps-md-2">
@@ -299,7 +299,7 @@
                         <div id="p-2" class="d-none part_2 container p-0">
                             <div class="d-md-flex flex-md-wrap align-items-md-start">
                                 <label id="id_p_email" for="id_email_name" class="col-12">Email
-                                    <input id="id_email_name"  name="email" type="email" oninput="validaEmail()" onblur="validaEmail(),correctedEmail()">
+                                    <input id="id_email_name" class="jx7"  name="email" type="email" oninput="validaEmail()" onblur="validaEmail(),correctedEmail()">
                                     <span class="small"> (To connect to your Customer Area) </span>
                                     <div id="id_email_invalid" class="invalid-feedback d-none">
                                         this field is required.
@@ -340,7 +340,7 @@
                                 </div>
                                 <label id="id_p_phone" for="id_phone_name" class="mt-3 col-12 col-md-6 ps-md-2">
                                     Phone Number
-                                    <input id="id_phone_name" type="text" maxlength="11" oninput="validaPhone()" onblur="validaPhone()">
+                                    <input id="id_phone_name" class="jx8" type="text" maxlength="11" oninput="validaPhone()" onblur="validaPhone()">
                                     <span class="small"> (To receive your PIN code) </span>
                                     <div id="id_phone_invalid" class="invalid-feedback d-none">
                                         Please, enter at least 2 characters.
@@ -357,7 +357,7 @@
 
                                 <label  id="id_p_address" for="id_address_name" class="mt-3 col-12 col-md-6 pe-md-2">
                                     Address
-                                    <input id="id_address_name" type="text" maxlength="30"  oninput="validaAdress()" onblur="validaAdress()">
+                                    <input id="id_address_name" class="jx9" type="text" maxlength="30"  oninput="validaAdress()" onblur="validaAdress()">
                                     <div id="id_address_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                     </div>
@@ -371,7 +371,7 @@
 
                                 <label id="id_p_city" for="id_city_name" class="mt-3 col-12 col-md-4 pe-md-2">
                                     City
-                                    <input id="id_city_name" type="text" maxlength="25" oninput="validaCity()" onblur="validaCity()">
+                                    <input id="id_city_name" class="jx10" type="text" maxlength="25" oninput="validaCity()" onblur="validaCity()">
                                     <div id="id_city_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                     </div>
@@ -379,28 +379,28 @@
 
                                 <label id="id_p_zip" for="id_zip_name" class="mt-3 col-12 col-md-4 px-md-1">
                                     Zip Code
-                                    <input id="id_zip_name" type="text" maxlength="15" oninput="validaZip()" onblur="validaZip()">
+                                    <input id="id_zip_name" class="jx11" type="text" maxlength="15" oninput="validaZip()" onblur="validaZip()">
                                     <div id="id_zip_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                     </div>
                                 </label>
 
-                                <label for="id_country" class="mt-3 col-12 col-md-4 ps-md-2">
+                                <label for="id_country" class="mt-3 col-12 col-md-4 ps-md-2 jx12">
                                     Country
-                                    <select name="country" id="id_country" class="col-12">
-                                        <option value="united_kingdom">United Kingdom</option>
+                                    <select name="country" id="id_country" class="col-12 ">
+                                        <option value="united kingdom">United Kingdom</option>
                                         <option value="france">France</option>
                                         <option value="israel">Israel</option>
                                     </select>
                                 </label>
 
                                 <div class="mt-3 pt-3 col-12 dotted" >
-                                    <input type="checkbox" class="pointer" name="delivery" id="id_delivery">
+                                    <input type="checkbox" class="pointer" name="delivery" id="id_delivery" onclick="if_dif()">
                                     <label for="id_delivery"> Delivery Address (if different)</label>
                                 </div>
-                                    <input id="id_search2" class="col-12 mt-3" type="text" placeholder="Search for an address">
+                                    <input id="id_search2" class="col-12 mt-3 if_dif" type="text" placeholder="Search for an address">
 
-                                    <label id="id_p_address_del" class="mt-3 col-12 col-md-6 pe-md-2" for="id_address_del_name">
+                                    <label id="id_p_address_del" class="mt-3 col-12 col-md-6 pe-md-2 if_dif" for="id_address_del_name">
                                         Address
                                         <input id="id_address_del_name" type="text"  maxlength="30" oninput="validaAdressDel()" onblur="validaAdressDel()">
                                         <div id="id_address_del_invalid" class="invalid-feedback d-none">
@@ -408,12 +408,12 @@
                                         </div>
                                     </label>
     
-                                    <label class="mt-3 col-12 col-md-6 ps-md-2" for="id_address_details_del">
+                                    <label class="mt-3 col-12 col-md-6 ps-md-2 if_dif" for="id_address_details_del">
                                         Additional Address Details
                                         <input id="id_address_details_del" type="text" maxlength="35">
                                     </label>
 
-                                    <label  id="id_p_city_del" class="mt-3 col-12 col-md-4 pe-md-2" for="id_city_del_name">
+                                    <label  id="id_p_city_del" class="mt-3 col-12 col-md-4 pe-md-2 if_dif" for="id_city_del_name">
                                         City
                                         <input id="id_city_del_name" type="text" maxlength="25" oninput="validaCityDel()" onblur="validaCityDel()">
                                         <div id="id_city_del_invalid" class="invalid-feedback d-none">
@@ -421,16 +421,16 @@
                                         </div>
                                     </label>
     
-                                    <label id="id_p_zip_del" class="mt-3 col-12 col-md-4 px-md-1" for="id_zip_del_name">
+                                    <label id="id_p_zip_del" class="mt-3 col-12 col-md-4 px-md-1 if_dif" for="id_zip_del_name">
                                         Zip Code
                                         <input id="id_zip_del_name" type="text" maxlength="15" oninput="validaZipDel()" onblur="validaZipDel()">
                                         <div id="id_zip_del_invalid" class="invalid-feedback d-none">
                                             This field is required.
                                         </div>
                                     </label>
-                                        <label class="mt-3 col-12 col-md-4 ps-md-2" for="id_country_del">
+                                        <label class="mt-3 col-12 col-md-4 ps-md-2 if_dif" for="id_country_del">
                                         Country
-                                        <select name="country_del" id="id_country_del" class="col-12">
+                                        <select name="country_del" id="id_country_del" class="col-12 if_dif">
                                             <option value="united_kingdom">United Kingdom</option>
                                             <option value="france">France</option>
                                             <option value="israel">Israel</option>
@@ -441,7 +441,7 @@
             
                                 <label class="mt-3 col-12 border-top pt-3" for="id_question">
                                     Secret Question
-                                    <select name="secret" id="id_question" class="col-12">
+                                    <select name="secret" id="id_question" class="col-12 jx13">
                                         <option value="mom">What is your mother's first name?</option>
                                         <option value="book">What is the name of your favorite book?</option>
                                         <option value="school">What is the name of your 1st school?</option>
@@ -452,30 +452,32 @@
                                 </label>
                                 <label id="id_p_answer" class="mt-3 col-12" for="id_answer_name">
                                     Answer
-                                    <input id="id_answer_name" name="answer" type="text" maxlength="22" oninput="validaAnswer()" onblur="validaAnswer()">
+                                    <input id="id_answer_name" class="jx14" name="answer" type="text" maxlength="22" oninput="validaAnswer()" onblur="validaAnswer()">
                                     <div id="id_answer_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                         Please enter at least 5 characters.
                                     </div>
                                 </label>
-                                <div class="mt-3 col-12">
+                                <div id="id_cards_count" class="mt-3 col-12">
                                     <label class="col-12" for="id_deposit_1">
                                         Card #1 First Deposit
-                                        <select name="deposit_1" id="id_deposit_1" class="col-12">
-                                            <option value="0">0 Eur</option>
-                                            <option value="10">10 Eur</option>
-                                            <option value="20">20 Eur</option>
+                                        <select name="deposit_1" id="id_deposit_1" class="col-12 jx15">
+                                            <option value="0">0 &euro;</option>
+                                            <option value="10">10 &euro;</option>
+                                            <option value="20">20 &euro;</option>
+                                            <option value="30">30 &euro;</option>
+                                            <option value="100">100 &euro;</option>
                                         </select>
                                     </label>
                                 </div>
-                                <label id="id_label_sec" class="mt-3 col-12" for="id_deposit_sec">
+                                <!-- <label id="id_label_sec" class="mt-3 col-12 d-none" for="id_deposit_sec">
                                     Card #2 First Deposit
                                     <select name="depositSec" id="id_deposit_sec" class="col-12">
                                         <option value="0">0 Eur</option>
                                         <option value="10">10 Eur</option>
                                         <option value="20">20 Eur</option>
                                     </select>
-                                </label>
+                                </label> -->
                             </div>    
                                 <p class="mt-3 mb-0 col-12">
                                     By clicking on VALIDATE i acknowledge that my AMEX card is a customized product and accept its immediate production from the approval of my order and, as such, expressly renounce to exercise my right to cancel my order pursuant to the provisions of article L.121-21-8 of the consumer code
@@ -523,10 +525,10 @@
                     </div>
                     
                     <ul class="Summary list-inline">
-                        <li>John Doe</li>
-                        <li>22 London Road</li>
-                        <li>London, SE1 6JW</li>
-                        <li>United Kingdom</li>
+                        <li class="text-capitalize"> <span id="id_first_summ"> </span> <span id="id_last_summ"> </span> </li>
+                        <li id="id_full_address" class="text-capitalize"></li>
+                        <li id="id_full_city" class="text-capitalize"></li>
+                        <li id="id_state" class="text-capitalize"></li>
                     </ul>
                     
 
