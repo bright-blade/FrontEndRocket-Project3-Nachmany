@@ -1,13 +1,12 @@
-window.onload = function(){
+window.onload = function () {
         console.log("js working");
         isSeed();
         cardCount();
         if_dif();
 }
 
-    
 // -----------menu of small screan---------------//
-function menu(){
+function menu() {
         let bars = document.getElementById("id_nav");
         bars.classList.toggle("d-none");
 }
@@ -15,106 +14,162 @@ function menu(){
 // -----------Scroll through pages---------------//
 
 var p = 0;
-function next(){
-        document.getElementById("p-"+p).classList.add("d-none");
-        p++;
-        document.getElementById("p-"+p).classList.remove("d-none");
-        if(p>0){
-                document.getElementById("id_btn").classList.remove("d-none");  
+beforeNext = () => {
+        if (p == 1) {
+                if (validaPart_1()) {
+                        next();
+                }
+        } else if (p == 2) {
+                if (validaPart_2()) {
+                        next();
+                }
+        } else {
+                next();
         }
-        if(p == 3){
-                document.getElementById("id_continue").classList.add("d-none");  
-                // validaPart_2();
-                mailDetails()    
-        }
-        if(p == 2){
-                document.getElementById("id_per_dtl").classList.add("d-none");  
-                document.getElementById("id_my_dtl").classList.remove("d-none");
-                // validaPart_1();  
-        } else{
-                document.getElementById("id_per_dtl").classList.remove("d-none");  
-                document.getElementById("id_my_dtl").classList.add("d-none");   
-        }
-        if(p == 1 || p == 2 ){
-                document.getElementById("id_1_2").classList.remove("d-none");
-                dateOnCard();
-        }else{
-                document.getElementById("id_1_2").classList.add("d-none");
-        }
-        
 }
 
-function pre(){
-        document.getElementById("p-"+p).classList.add("d-none");
-        p--;
-        document.getElementById("p-"+p).classList.remove("d-none");
-        if(p>0){
-                document.getElementById("id_btn").classList.remove("d-none");  
-        }else{
-                document.getElementById("id_btn").classList.add("d-none");  
-                
+function validaPart_1() {
+        if (document.querySelector("#id_i_do").checked) {
+                if (document.querySelector("#id_corporate").checked) {
+                        if (validaCompany() && validaStructure() && validaDOB_2()) {
+                                return true;
+                        } else {
+                                return false;
+                        }
+                } else if (document.querySelector("#id_association").checked) {
+                        if (validaAssociation() && validaDOB_3()) {
+                                return true;
+                        } else {
+                                return false;
+                        }
+                } else {
+                        if (validaFirst() && validaLast() && validaDOB_1()) {
+                                return true;
+                        } else {
+                                return false;
+                        }
+                }
+        } else {
+                return false;
         }
-        if(p == 3){
+}
+
+function validaPart_2() {
+        if (document.querySelector("#id_i_will").checked)
+                if (validaEmail() && validaPhone() && validaAdress() && validaCity() && validaZip() && validaAnswer) {
+                        if (document.querySelector("#id_delivery").checked) {
+                                if (validaAdressDel() && validaCityDel() && validaZipDel()) {
+                                        return true;
+                                } else {
+                                        return false;
+                                }
+                        } else {
+                                return true;
+                        }
+                } else {
+                        return false;
+                }
+}
+
+function next() {
+        document.getElementById("p-" + p).classList.add("d-none");
+        p++;
+        document.getElementById("p-" + p).classList.remove("d-none");
+        if (p > 0) {
+                document.getElementById("id_btn").classList.remove("d-none");
+        }
+        if (p == 3) {
                 document.getElementById("id_continue").classList.add("d-none");
-                
-        }else{
-                document.getElementById("id_continue").classList.remove("d-none");  
-                
+                // validaPart_2();
+                mailDetails();
+                ibanSumm();
+                total();
+                sponsorship();
         }
-        if(p == 2){
-                document.getElementById("id_per_dtl").classList.add("d-none");  
-                document.getElementById("id_my_dtl").classList.remove("d-none");  
-        } else{
-                document.getElementById("id_per_dtl").classList.remove("d-none");  
-                document.getElementById("id_my_dtl").classList.add("d-none");   
+        if (p == 2) {
+                document.getElementById("id_per_dtl").classList.add("d-none");
+                document.getElementById("id_my_dtl").classList.remove("d-none");
+                // validaPart_1();  
+        } else {
+                document.getElementById("id_per_dtl").classList.remove("d-none");
+                document.getElementById("id_my_dtl").classList.add("d-none");
         }
-        if(p == 1 || p == 2 ){
+        if (p == 1 || p == 2) {
                 document.getElementById("id_1_2").classList.remove("d-none");
-        }else{
+                dateOnCard();
+        } else {
                 document.getElementById("id_1_2").classList.add("d-none");
         }
-        
+
+}
+
+function pre() {
+        document.getElementById("p-" + p).classList.add("d-none");
+        p--;
+        document.getElementById("p-" + p).classList.remove("d-none");
+        if (p > 0) {
+                document.getElementById("id_btn").classList.remove("d-none");
+        } else {
+                document.getElementById("id_btn").classList.add("d-none");
+
+        }
+        if (p == 3) {
+                document.getElementById("id_continue").classList.add("d-none");
+
+        } else {
+                document.getElementById("id_continue").classList.remove("d-none");
+
+        }
+        if (p == 2) {
+                document.getElementById("id_per_dtl").classList.add("d-none");
+                document.getElementById("id_my_dtl").classList.remove("d-none");
+        } else {
+                document.getElementById("id_per_dtl").classList.remove("d-none");
+                document.getElementById("id_my_dtl").classList.add("d-none");
+        }
+        if (p == 1 || p == 2) {
+                document.getElementById("id_1_2").classList.remove("d-none");
+        } else {
+                document.getElementById("id_1_2").classList.add("d-none");
+        }
+
 }
 
 // ----------- checkbox if diffrent ---------------//
 if_dif = () => {
         let checkbox = document.querySelector("#id_delivery");
         if (checkbox.checked == true) {
-            
-            $(".if_dif").show();
+
+                $(".if_dif").show();
         } else {
-            $(".if_dif").hide();
+                $(".if_dif").hide();
         }
-    }
+}
+
 // ----------- add Card ---------------//
-function addNewCard(){
-        // document.querySelector("#id_label_sec").classList.remove("d-none");
+function addNewCard() {
         document.querySelector("#id_added").classList.remove("d-none");
         document.querySelector("#id_label_custom_2").classList.remove("d-none");
         document.querySelector("#id_add_card").classList.add("d-none");
         document.querySelector("#id_one_or_two").innerHTML = "2";
 
-        let i =2;
-        document.querySelector("#id_cards_count").innerHTML += 
-        '<label class="col-12 mt-3" for="id_deposit_'+i+'">Card #'+i+' First Deposit<select name="deposit_'+i+'" id="id_deposit_'+i+'" class="col-12"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
- 
-        
-        
+        document.querySelector("#id_select").value = 2;
+        cardCount();
 }
-function deleteNewCard(){
-        // document.querySelector("#id_label_sec").classList.add("d-none");
+
+function deleteNewCard() {
         document.querySelector("#id_added").classList.add("d-none");
         document.querySelector("#id_label_custom_2").classList.add("d-none");
         document.querySelector("#id_add_card").classList.remove("d-none");
         document.querySelector("#id_one_or_two").innerHTML = "1";
 
-        document.querySelector("#id_cards_count").innerHTML = 
-        '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
-
-        
+        document.querySelector("#id_select").value = 1;
+        cardCount();
 }
+
+
 // ----------- change gender ---------------//
-function onMrMis(){
+function onMrMis() {
         document.querySelector("#id_per_dtl").innerHTML = "personal details <p>&#8212;</p>";
         document.querySelector("#id_dtl_of_prsn").classList.remove("d-none");
         document.querySelector("#id_cprt").classList.add("d-none");
@@ -124,9 +179,22 @@ function onMrMis(){
         changeFN();
         changeLN();
         changeCos();
+        beforeOnMrMis();
+
+        // document.querySelector("#id_fixed").classList.add("d-none");
 
 }
-function onCorporate(){
+beforeOnMrMis = () => {
+        let mr = document.querySelector("#id_Mr").checked
+        let mis = document.querySelector("#id_Mis").checked
+        if (mr || mis) {
+                return   
+        }else{
+                deleteNewCard();
+        }
+}
+
+function onCorporate() {
         document.querySelector("#id_per_dtl").innerHTML = "corporate information <p>&#8212;</p>";
         document.querySelector("#id_dtl_of_prsn").classList.add("d-none");
         document.querySelector("#id_cprt").classList.remove("d-none");
@@ -136,8 +204,15 @@ function onCorporate(){
         changeCom();
         changeStrc();
         changecoscom();
+        deleteNewCard();
+
+        // let fix =  document.querySelector("#id_fixed");
+        // fix.classList.remove("d-none");
+        // fix.innerHTML = 'Fixed (upgrade corporate) <span class="float-end">8&euro;</span>';
+        
 }
-function onAssociation(){
+
+function onAssociation() {
         document.querySelector("#id_per_dtl").innerHTML = "association information <p>&#8212;</p>";
         document.querySelector("#id_dtl_of_prsn").classList.add("d-none");
         document.querySelector("#id_cprt").classList.add("d-none");
@@ -146,77 +221,329 @@ function onAssociation(){
         empty();
         changeAssc();
         changecoscom();
+        deleteNewCard();
+        
+        // let fix =  document.querySelector("#id_fixed");
+        // fix.classList.remove("d-none");
+        // fix.innerHTML = 'Fixed (upgrade association) <span class="float-end">8&euro;</span>';
+
 }
 // --------card's changes---------//
-function changeFN(){
+function changeFN() {
         let f = document.getElementById("id_first_name").value;
         document.getElementById("id_f_name_card").innerHTML = f;
-        document.getElementById("id_first_summ").innerHTML = f+" ";
+        document.getElementById("id_first_summ").innerHTML = f + " ";
 }
-function changeLN(){
+
+function changeLN() {
         let f = document.getElementById("id_last_name").value;
         document.getElementById("id_l_name_card").innerHTML = f;
         document.getElementById("id_last_summ").innerHTML = f;
 }
-function changeCos(){
+
+function changeCos() {
         let f = document.getElementById("id_custom").value;
         document.getElementById("id_cstm_card").innerHTML = f;
 }
 // +++ Company
-function changeCom(){
+function changeCom() {
         let f = document.getElementById("id_company_name").value;
         document.getElementById("id_f_name_card").innerHTML = f;
+        document.getElementById("id_first_summ").innerHTML = f + " ";
 }
-function changeStrc(){
+
+function changeStrc() {
         let f = document.getElementById("id_structure_name").value;
         document.getElementById("id_l_name_card").innerHTML = f;
+        document.getElementById("id_last_summ").innerHTML = f;
 }
-function changecoscom(){
+
+function changecoscom() {
         let f = document.getElementById("id_here_1").value;
         document.getElementById("id_cstm_card").innerHTML = f;
 }
 // +++ Association
-function changeAssc(){
+function changeAssc() {
         let f = document.getElementById("id_association_name").value;
-        document.getElementById("id_f_name_card").innerHTML = f ;
+        document.getElementById("id_f_name_card").innerHTML = f;
+        document.getElementById("id_first_summ").innerHTML = f + " ";
 }
 // +++ empty
-function empty(){
+function empty() {
         document.getElementById("id_f_name_card").innerHTML = "";
         document.getElementById("id_l_name_card").innerHTML = "";
         document.getElementById("id_cstm_card").innerHTML = "";
 }
 // +++ date on th card
-function dateOnCard(){
-        let x,y,z;
+function dateOnCard() {
+        let x, y, z;
         const d = new Date();
         y = d.getFullYear();
-        x= y-1998;
-        z= d.getMonth() + 1,
-        document.getElementById("id_date").innerHTML =`${z}/${x}` ;
+        x = y - 1998;
+        z = d.getMonth() + 1,
+                document.getElementById("id_date").innerHTML = `${z}/${x}`;
 }
 
-function cardCount(){
-        let count = document.querySelector("#id_select").value;
+function cardCount() {
+        let countCards = document.querySelector("#id_select").value;
         document.querySelector("#id_indicate").innerHTML =
-        '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom()"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" ><span class="french_span pointer"></span></label></div>';
-        
-        document.querySelector("#id_cards_count").innerHTML = 
-        '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
-        
-        for(let i = 2 ; i<=count ; i++){
-                document.querySelector("#id_indicate").innerHTML +=
-                '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_'+i+'" type="text"></div><div id="id_card_label'+i+'" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-'+i+'"><input id="id_uk-'+i+'" class="class_uk" type="radio" name="flag'+i+'"><span class="uk_span pointer"></span></label><label for="id_french-'+i+'"><input id="id_french-'+i+'" class="class_fr" type="radio" name="flag'+i+'"><span class="french_span pointer"></span></label></div>';
-                
-                document.querySelector("#id_cards_count").innerHTML += 
-                '<label class="col-12 mt-3" for="id_deposit_'+i+'">Card #'+i+' First Deposit<select name="deposit_'+i+'" id="id_deposit_'+i+'" class="col-12"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>'
-                
-                
+          '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom()"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag" onclick="ibanSummary(this)"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" onclick="ibanSummary(this)"><span class="french_span pointer"></span></label></div>';
+      
+        document.querySelector("#id_cards_count").innerHTML =
+          '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15" onchange="selectConnectSummary(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
+      
+        billFixedUpgrade();
+        selectConnectSummary(document.querySelector("#id_deposit_1"));
+      
+        for (let i = 2; i <= countCards; i++) {
+          document.querySelector("#id_indicate").innerHTML +=
+            '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_' +
+            i +
+            '" type="text"></div><div id="id_card_label' +
+            i +
+            '" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-' +
+            i +
+            '"><input id="id_uk-' +
+            i +
+            '" class="class_uk" type="radio" name="flag' +
+            i +
+            '" onclick="ibanSummary(this)"><span class="uk_span pointer"></span></label><label for="id_french-' +
+            i +
+            '"><input id="id_french-' +
+            i +
+            '" class="class_fr" type="radio" name="flag' +
+            i +
+            '" onclick="ibanSummary(this)"><span class="french_span pointer"></span></label></div>';
+      
+          document.querySelector("#id_cards_count").innerHTML +=
+            '<label class="col-12 mt-3" for="id_deposit_' +
+            i +
+            '">Card #' +
+            i +
+            ' First Deposit<select name="deposit_' +
+            i +
+            '" id="id_deposit_' +
+            i +
+            '" class="col-12" onchange="selectConnectSummary(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
+      
+          // let s =
+          let sVal = document.querySelector("#id_deposit_" + i).value;
+          document.querySelector("#id_summary_bill").innerHTML += `
+                  <p id="id_card_${i}" class="m-0">
+                  <i id="id_less_${i}" class="fa fa-trash-o text-danger pointer" onclick="lessOne(this)" aria-hidden="true"></i>
+                  1 X card (annual fees)<span id="id_iban_span_${i}"></span> 
+                  <span id="id_cost_card_${i}" class="float-end">
+                      29.90&euro;
+                  </span>
+              </p>
+              
+              <p id="id_first_deposit_${i}" class="m-0 ms-4 " >
+                  <i id="id_trash_${i}" class="fa fa-trash-o text-white pointer" onclick="zero(this)" aria-hidden="true"></i>
+                  First deposit
+                  <span id="id_depo_${i}" class="float-end">
+                  ${sVal}&euro;
+                  </span>
+              </p>
+                  `;
+          selectConnectSummary(document.querySelector("#id_deposit_" + i));
+        }
+      }
+      
+      // ==========fixed============//
+      
+      function billFixedUpgrade() {
+        let cor = document.querySelector("#id_corporate").checked;
+        let asso = document.querySelector("#id_association").checked;
+        let s = document.querySelector("#id_deposit_1");
+        let sVal = s.value;
+        if (cor) {
+          document.querySelector("#id_summary_bill").innerHTML = `
+              <span class="bg-light text-warning position-absolute rounded-circle px-2 py-1 cart">
+              <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </span>
+          <p id="id_fixed" class="m-0 ms-3">
+              Fixed (upgrade corporate)
+                  <span  class="float-end">
+                      8&euro;
+                  </span>
+          </p>
+          <p id="id_card_1" class="m-0 ms-3">
+              <!-- <i class="fa fa-trash-o text-danger pointer" aria-hidden="true"></i> -->
+              1 X card (annual fees)<span id="id_iban_span_1"></span> 
+              <span id="id_cost_card_1" class="float-end">
+                  29.90&euro;
+              </span>
+          </p>
+          <p id="id_first_deposit_1" class="m-0 ms-4" >
+              <i id="id_trash_1" class="fa fa-trash-o text-white pointer" onclick="zero(this)" aria-hidden="true"></i>
+              First deposit
+              <span id="id_depo_1" class="float-end">
+              ${sVal}&euro;
+              </span>
+          </p>
+      `;
+        } else if (asso) {
+          document.querySelector(
+            "#id_summary_bill"
+          ).innerHTML = `                            <span class="bg-light text-warning position-absolute rounded-circle px-2 py-1 cart">
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </span>
+          <p id="id_fixed" class="m-0 ms-3">
+          Fixed (upgrade association)
+              <span  class="float-end">
+                  8&euro;
+              </span>
+          </p>
+          <p id="id_card_1" class="m-0 ms-3">
+          <!-- <i class="fa fa-trash-o text-danger pointer" aria-hidden="true"></i> -->
+          1 X card (annual fees)<span id="id_iban_span_1"></span> 
+          <span id="id_cost_card_1" class="float-end">
+              29.90&euro;
+          </span>
+          </p>
+          <p id="id_first_deposit_1" class="m-0 ms-4" >
+          <i id="id_trash_1" class="fa fa-trash-o text-white pointer" onclick="zero(this)" aria-hidden="true"></i>
+          First deposit
+          <span id="id_depo_1" class="float-end">
+          ${sVal}&euro;
+          </span>
+          </p>
+          `;
+        } else {
+          // document.querySelector("#id_fixed").classList.add("d-none")
+      
+          document.querySelector("#id_summary_bill").innerHTML = `                            <span class="bg-light text-warning position-absolute rounded-circle px-2 py-1 cart">
+          <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+          </span>
+          <p id="id_card_1" class="m-0 ms-3">
+          <!-- <i class="fa fa-trash-o text-danger pointer" aria-hidden="true"></i> -->
+          1 X card (annual fees)<span id="id_iban_span_1"></span> 
+          <span id="id_cost_card_1" class="float-end">
+              29.90&euro;
+          </span>
+          </p>
+          <p id="id_first_deposit_1" class="m-0 ms-4" >
+          <i id="id_trash_1" class="fa fa-trash-o text-white pointer" onclick="zero(this)" aria-hidden="true"></i>
+          First deposit
+          <span id="id_depo_1" class="float-end">
+          ${sVal}&euro;
+          </span>
+          </p>
+          `;
+        }
+      }
+      
+      // ----- trash icons--------//
+      
+      function lessOne(_elem) {
+        let x = _elem.id.slice(-1);
+        let ar_value = [];
+        let howMuch = document.querySelector("#id_select").value;
+        for (let i = 1; i <= howMuch; i++) {
+          if (i < x) {
+            ar_value[i] = document.querySelector(`#id_deposit_${i}`).value;
+          } else if (i > x) {
+            ar_value[i - 1] = document.querySelector(`#id_deposit_${i}`).value;
+          }
+        }
+        console.log(ar_value);
+        howMuch--;
+        document.querySelector("#id_select").value = howMuch;
+        if (
+          document.querySelector(`#id_Mr`).checked ||
+          document.querySelector(`#id_Mis`).checked
+        ) {
+          deleteNewCard();
+        } else {
+          cardCount();
+        }
+      
+        let promiseCard = new Promise(function (resolve) {
+          resolve(ar_value);
+        });
+      
+        promiseCard.then(function (ar_value) {
+          for (let i = 1; i < ar_value.length; i++) {
+            let y = document.querySelector(`#id_deposit_${i}`);
+            y.value = ar_value[i];
+            selectConnectSummary(y);
+          }
+        });
+        total();
+      }
+      
+      function zero(elem) {
+        let j = elem.id.slice(-1);
+        let depoSelect = document.querySelector("#id_deposit_" + j);
+        depoSelect.value = 0;
+        selectConnectSummary(depoSelect);
+        total();
+      }
+      
+      function selectConnectSummary(_Select) {
+        let k = _Select.id.slice(-1);
+        let s = document.querySelector("#id_first_deposit_" + k);
+        let depo = document.querySelector("#id_depo_" + k);
+        let val = _Select.value;
+        if (_Select.value == 0 || _Select == null) {
+          s.classList.add("d-none");
+        } else {
+          s.classList.remove("d-none");
+          depo.innerHTML = `${val}&euro;`;
+        }
+      }
+      function ibanSummary(iban) {
+        let ib = iban.id.slice(3,5);
+        let ind = iban.id.slice(-1);
+        if ( ib == "fr"){
+            document.querySelector(`#id_iban_span_${ind}`).innerHTML = ", Iban: FR"
+          }else if (ib == "uk"){
+            document.querySelector(`#id_iban_span_${ind}`).innerHTML = ", Iban: UK"
+        }
+}      
+// --------details summary changes---------//
+function mailDetails() {
+        document.querySelector("#id_full_address").innerHTML = document.querySelector("#id_address_name").value;
+        let city = document.querySelector("#id_city_name").value + " ";
+        let zipy = document.querySelector("#id_zip_name").value;
+        document.querySelector("#id_full_city").innerHTML = city + zipy;
+        document.querySelector("#id_state").innerHTML = document.querySelector("#id_country").value;
+}
+
+// -------- summary card type---------//
+
+basic = () => {
+        document.querySelector("#id_card_type_summ").innerHTML = " basic";
+}
+Classic = () => {
+        document.querySelector("#id_card_type_summ").innerHTML = " Classic";
+}
+vip = () => {
+        document.querySelector("#id_card_type_summ").innerHTML = " VIP";
+}
+ibanSumm = () => {
+
+        document.querySelector("#id_iban_summ").innerHTML = " UK";
+        if (document.querySelector("#id_fr_1").checked) {
+
+                document.querySelector("#id_iban_summ").innerHTML = " French";
         }
 }
-
-// --------details summary changes---------//
-
-
-
-
+// ---------- total------------//
+function total(){
+        let s = document.querySelector(`#id_select`).value ;
+        let sum = 0;
+        let cards = parseInt(s, 10);
+        sum = 29.9 * cards;
+        if(document.querySelector(`#id_Mr`).checked || document.querySelector(`#id_Mis`).checked){
+        }else{
+            sum +=8;
+        }
+        for(let i = 1 ; i <= cards ; i++ ){
+            let depo = document.querySelector("#id_deposit_"+i).value;
+            let d = parseInt(depo, 10)
+            sum += d;
+        }
+        document.querySelector("#id_totalos").innerHTML = sum +"&euro;";
+        return sum;
+    }

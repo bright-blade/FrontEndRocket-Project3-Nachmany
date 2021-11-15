@@ -1,7 +1,10 @@
 let crrtEmail;
 function correctedEmail(){
-    var myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    var myModal = new bootstrap.Modal(document.getElementById("exampleModal1"));
     // $(".modal").modal("show");
+
+
+    
     let inptMail = document.querySelector("#id_email_name").value;
     inptMailSlice = inptMail.slice(-10,);
     inptMailSliceH = inptMail.slice(-12,);

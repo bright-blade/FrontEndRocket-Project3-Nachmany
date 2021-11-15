@@ -1,8 +1,22 @@
-function mailDetails() {
-    document.querySelector("#id_full_address").innerHTML = document.querySelector("#id_address_name").value;
-    let city = document.querySelector("#id_city_name").value+" ";
-    let zipy = document.querySelector("#id_zip_name").value;
-    document.querySelector("#id_full_city").innerHTML = city+zipy;
-    document.querySelector("#id_state").innerHTML = document.querySelector("#id_country").value;
-    
+
+function playTheModal() {
+    let myModal = new bootstrap.Modal(document.getElementById("exampleModal"));
+    myModal.show()
 }
+
+// let myPromise = new Promise(function(myResolve) {
+//   let x = 0;
+
+// // some code (try to change x to 5)
+
+//   if (x == 0) {
+//     myResolve("OK");
+//   } 
+// });
+
+// myPromise.then(
+//   function(value) {
+//       myDisplayer(value);
+//     }
+// );
+
