@@ -1,10 +1,161 @@
-window.onload = function () {
+window.onload = async function () {
         console.log("js working");
+        
+        document.querySelector("#id_Mr").addEventListener("click",function(){
+                onMrMis();
+                titleLocalStorage(this);
+        })
+        document.querySelector("#id_Mis").addEventListener("click",function(){
+                onMrMis();
+                titleLocalStorage(this);
+        })
+        document.querySelector("#id_corporate").addEventListener("click",function(){
+                onCorporate();
+                titleLocalStorage(this);
+        })
+        document.querySelector("#id_association").addEventListener("click",function(){
+                onAssociation();
+                titleLocalStorage(this);
+        })
+
+        
+        
+        
+        let mypromise = new Promise((resolve)=>{
+                checkLocalTitle();
+                countSelectFromLocal();
+                resolve();
+                
+        })
+        mypromise.then(()=>{
+                checkLocal();
+                checkLocalBtn();
+                titleCheck();
+                checkAddedCardBtnLocalStorageFlag();
+                
+        })
+        
         isSeed();
-        cardCount();
         if_dif();
+
+
+
+
+        // ---------chenge title by local storage----------//1
+        let titleCheck = () => {
+                if(localStorage["title"]){
+                    if(localStorage["title"]=="id_corporate"){
+            
+                        onCorporate();
+                    }else if(localStorage["title"]=="id_association"){
+                        
+                        onAssociation();
+                    }else{
+                        onMrMis();
+                    }
+                }
+            }
+            
+
+        // ----------- change gender ---------------//
+
+        function onMrMis() {
+                document.querySelector("#id_per_dtl").innerHTML = "personal details <p>&#8212;</p>";
+                document.querySelector("#id_dtl_of_prsn").classList.remove("d-none");
+                document.querySelector("#id_cprt").classList.add("d-none");
+                document.querySelector("#id_associ").classList.add("d-none");
+                document.querySelector("#id_card_account").classList.add("d-none");
+                empty();
+                changeFN();
+                changeLN();
+                changeCos();
+
+        }
+
+
+        function onCorporate() {
+                document.querySelector("#id_per_dtl").innerHTML = "corporate information <p>&#8212;</p>";
+                document.querySelector("#id_dtl_of_prsn").classList.add("d-none");
+                document.querySelector("#id_cprt").classList.remove("d-none");
+                document.querySelector("#id_associ").classList.add("d-none");
+                document.querySelector("#id_card_account").classList.remove("d-none");
+                empty();
+                changeCom();
+                changeStrc();
+                changecoscom();
+        }
+
+        function onAssociation() {
+                document.querySelector("#id_per_dtl").innerHTML = "association information <p>&#8212;</p>";
+                document.querySelector("#id_dtl_of_prsn").classList.add("d-none");
+                document.querySelector("#id_cprt").classList.add("d-none");
+                document.querySelector("#id_associ").classList.remove("d-none");
+                document.querySelector("#id_card_account").classList.remove("d-none");
+                empty();
+                changeAssc();
+                changecoscom();
+
+        }
+                // --------card's changes---------//
+        
+} //<<--------------- end of onload---------------//
+
+
+function changeFN() {
+        let f = document.getElementById("id_first_name").value;
+        document.getElementById("id_f_name_card").innerHTML = f;
+        document.getElementById("id_first_summ").innerHTML = f + " ";
 }
 
+function changeLN() {
+        let f = document.getElementById("id_last_name").value;
+        document.getElementById("id_l_name_card").innerHTML = f;
+        document.getElementById("id_last_summ").innerHTML = f;
+}
+
+function changeCos() {
+        let f = document.getElementById("id_custom").value;
+        document.getElementById("id_cstm_card").innerHTML = f;
+}
+// +++ Company
+function changeCom() {
+        let f = document.getElementById("id_company_name").value;
+        document.getElementById("id_f_name_card").innerHTML = f;
+        document.getElementById("id_first_summ").innerHTML = f + " ";
+}
+
+function changeStrc() {
+        let f = document.getElementById("id_structure_name").value;
+        document.getElementById("id_l_name_card").innerHTML = f;
+        document.getElementById("id_last_summ").innerHTML = f;
+}
+
+function changecoscom() {
+        let f = document.getElementById("id_here_1").value;
+        document.getElementById("id_cstm_card").innerHTML = f;
+}
+// +++ Association
+function changeAssc() {
+        let f = document.getElementById("id_association_name").value;
+        document.getElementById("id_f_name_card").innerHTML = f;
+        document.getElementById("id_first_summ").innerHTML = f + " ";
+}
+// +++ empty
+function empty() {
+        document.getElementById("id_f_name_card").innerHTML = "";
+        document.getElementById("id_l_name_card").innerHTML = "";
+        document.getElementById("id_cstm_card").innerHTML = "";
+}
+
+// +++ date on th card
+function dateOnCard() {
+        let x, y, z;
+        const d = new Date();
+        y = d.getFullYear();
+        x = y - 1998;
+        z = d.getMonth() + 1,
+                document.getElementById("id_date").innerHTML = `${z}/${x}`;
+}
 // -----------menu of small screan---------------//
 function menu() {
         let bars = document.getElementById("id_nav");
@@ -81,6 +232,9 @@ function next() {
         if (p == 3) {
                 document.getElementById("id_continue").classList.add("d-none");
                 // validaPart_2();
+
+                cards = document.querySelector("#id_select").value;
+                document.querySelector("#id_one_or_two").innerHTML = cards;
                 mailDetails();
                 ibanSumm();
                 total();
@@ -89,6 +243,7 @@ function next() {
         if (p == 2) {
                 document.getElementById("id_per_dtl").classList.add("d-none");
                 document.getElementById("id_my_dtl").classList.remove("d-none");
+                cardCount();
                 // validaPart_1();  
         } else {
                 document.getElementById("id_per_dtl").classList.remove("d-none");
@@ -152,145 +307,26 @@ function addNewCard() {
         document.querySelector("#id_label_custom_2").classList.remove("d-none");
         document.querySelector("#id_add_card").classList.add("d-none");
         document.querySelector("#id_one_or_two").innerHTML = "2";
-
-        document.querySelector("#id_select").value = 2;
-        cardCount();
 }
 
 function deleteNewCard() {
         document.querySelector("#id_added").classList.add("d-none");
         document.querySelector("#id_label_custom_2").classList.add("d-none");
         document.querySelector("#id_add_card").classList.remove("d-none");
-        document.querySelector("#id_one_or_two").innerHTML = "1";
-
         document.querySelector("#id_select").value = 1;
-        cardCount();
 }
 
 
-// ----------- change gender ---------------//
-function onMrMis() {
-        document.querySelector("#id_per_dtl").innerHTML = "personal details <p>&#8212;</p>";
-        document.querySelector("#id_dtl_of_prsn").classList.remove("d-none");
-        document.querySelector("#id_cprt").classList.add("d-none");
-        document.querySelector("#id_associ").classList.add("d-none");
-        document.querySelector("#id_card_account").classList.add("d-none");
-        empty();
-        changeFN();
-        changeLN();
-        changeCos();
-        beforeOnMrMis();
 
-        // document.querySelector("#id_fixed").classList.add("d-none");
-
-}
-beforeOnMrMis = () => {
-        let mr = document.querySelector("#id_Mr").checked
-        let mis = document.querySelector("#id_Mis").checked
-        if (mr || mis) {
-                return   
-        }else{
-                deleteNewCard();
-        }
-}
-
-function onCorporate() {
-        document.querySelector("#id_per_dtl").innerHTML = "corporate information <p>&#8212;</p>";
-        document.querySelector("#id_dtl_of_prsn").classList.add("d-none");
-        document.querySelector("#id_cprt").classList.remove("d-none");
-        document.querySelector("#id_associ").classList.add("d-none");
-        document.querySelector("#id_card_account").classList.remove("d-none");
-        empty();
-        changeCom();
-        changeStrc();
-        changecoscom();
-        deleteNewCard();
-
-        // let fix =  document.querySelector("#id_fixed");
-        // fix.classList.remove("d-none");
-        // fix.innerHTML = 'Fixed (upgrade corporate) <span class="float-end">8&euro;</span>';
-        
-}
-
-function onAssociation() {
-        document.querySelector("#id_per_dtl").innerHTML = "association information <p>&#8212;</p>";
-        document.querySelector("#id_dtl_of_prsn").classList.add("d-none");
-        document.querySelector("#id_cprt").classList.add("d-none");
-        document.querySelector("#id_associ").classList.remove("d-none");
-        document.querySelector("#id_card_account").classList.remove("d-none");
-        empty();
-        changeAssc();
-        changecoscom();
-        deleteNewCard();
-        
-        // let fix =  document.querySelector("#id_fixed");
-        // fix.classList.remove("d-none");
-        // fix.innerHTML = 'Fixed (upgrade association) <span class="float-end">8&euro;</span>';
-
-}
-// --------card's changes---------//
-function changeFN() {
-        let f = document.getElementById("id_first_name").value;
-        document.getElementById("id_f_name_card").innerHTML = f;
-        document.getElementById("id_first_summ").innerHTML = f + " ";
-}
-
-function changeLN() {
-        let f = document.getElementById("id_last_name").value;
-        document.getElementById("id_l_name_card").innerHTML = f;
-        document.getElementById("id_last_summ").innerHTML = f;
-}
-
-function changeCos() {
-        let f = document.getElementById("id_custom").value;
-        document.getElementById("id_cstm_card").innerHTML = f;
-}
-// +++ Company
-function changeCom() {
-        let f = document.getElementById("id_company_name").value;
-        document.getElementById("id_f_name_card").innerHTML = f;
-        document.getElementById("id_first_summ").innerHTML = f + " ";
-}
-
-function changeStrc() {
-        let f = document.getElementById("id_structure_name").value;
-        document.getElementById("id_l_name_card").innerHTML = f;
-        document.getElementById("id_last_summ").innerHTML = f;
-}
-
-function changecoscom() {
-        let f = document.getElementById("id_here_1").value;
-        document.getElementById("id_cstm_card").innerHTML = f;
-}
-// +++ Association
-function changeAssc() {
-        let f = document.getElementById("id_association_name").value;
-        document.getElementById("id_f_name_card").innerHTML = f;
-        document.getElementById("id_first_summ").innerHTML = f + " ";
-}
-// +++ empty
-function empty() {
-        document.getElementById("id_f_name_card").innerHTML = "";
-        document.getElementById("id_l_name_card").innerHTML = "";
-        document.getElementById("id_cstm_card").innerHTML = "";
-}
-// +++ date on th card
-function dateOnCard() {
-        let x, y, z;
-        const d = new Date();
-        y = d.getFullYear();
-        x = y - 1998;
-        z = d.getMonth() + 1,
-                document.getElementById("id_date").innerHTML = `${z}/${x}`;
-}
 
 function cardCount() {
+
         let countCards = document.querySelector("#id_select").value;
         document.querySelector("#id_indicate").innerHTML =
-          '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom()"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag" onclick="ibanSummary(this)"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" onclick="ibanSummary(this)"><span class="french_span pointer"></span></label></div>';
+          '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom(),addToLocalStorage(this)"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="french_span pointer"></span></label></div>';
       
         document.querySelector("#id_cards_count").innerHTML =
-          '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15" onchange="selectConnectSummary(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
+          '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15" onchange="selectConnectSummary(this),addToLocalStorage(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
       
         billFixedUpgrade();
         selectConnectSummary(document.querySelector("#id_deposit_1"));
@@ -299,7 +335,7 @@ function cardCount() {
           document.querySelector("#id_indicate").innerHTML +=
             '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_' +
             i +
-            '" type="text"></div><div id="id_card_label' +
+            '" type="text" oninput="addToLocalStorage(this)"></div><div id="id_card_label' +
             i +
             '" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-' +
             i +
@@ -307,13 +343,13 @@ function cardCount() {
             i +
             '" class="class_uk" type="radio" name="flag' +
             i +
-            '" onclick="ibanSummary(this)"><span class="uk_span pointer"></span></label><label for="id_french-' +
+            '" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="uk_span pointer"></span></label><label for="id_french-' +
             i +
             '"><input id="id_french-' +
             i +
             '" class="class_fr" type="radio" name="flag' +
             i +
-            '" onclick="ibanSummary(this)"><span class="french_span pointer"></span></label></div>';
+            '" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="french_span pointer"></span></label></div>';
       
           document.querySelector("#id_cards_count").innerHTML +=
             '<label class="col-12 mt-3" for="id_deposit_' +
@@ -324,7 +360,7 @@ function cardCount() {
             i +
             '" id="id_deposit_' +
             i +
-            '" class="col-12" onchange="selectConnectSummary(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
+            '" class="col-12" onchange="selectConnectSummary(this),addToLocalStorage(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
       
           // let s =
           let sVal = document.querySelector("#id_deposit_" + i).value;
@@ -347,6 +383,9 @@ function cardCount() {
                   `;
           selectConnectSummary(document.querySelector("#id_deposit_" + i));
         }
+
+        checkLocal();
+
       }
       
       // ==========fixed============//
@@ -454,8 +493,6 @@ function cardCount() {
           document.querySelector(`#id_Mis`).checked
         ) {
           deleteNewCard();
-        } else {
-          cardCount();
         }
       
         let promiseCard = new Promise(function (resolve) {
