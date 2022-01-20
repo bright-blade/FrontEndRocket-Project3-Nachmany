@@ -1,4 +1,6 @@
 project 4
 
-This branch is like the main but got a new ability to save data at Local Storage.
-So if some user leaves the site and come back he doesn't lose his data and has to start it all over.
+אתר טופס עם ולידאציה, יכולות של שמירה של הנתונים בlocal storage,
+תיקון אוטומאטי למייל, אפשרות לתת הנחת חסות, קוד קופון פועל,
+פרטים בסיכום מתעדכנים לפי בחירות המשתמש מדף הכניסה ועד הדף לפני האחרון,
+שמירה על נתונים ברקע אם עובר ממצב למצב בtitle באופן מלא.
