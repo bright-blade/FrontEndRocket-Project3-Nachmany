@@ -25,7 +25,10 @@ function checkLocal(){
     if(localStorage["customer"]){
         save_ar = JSON.parse(localStorage["customer"]);
         for (const i in save_ar) {
-                document.querySelector("#"+save_ar[i].id).value = save_ar[i].value;
+            let element = document.querySelector("#"+save_ar[i].id)
+            if(element){
+                element.value = save_ar[i].value;
+            }
         }
     }
 }
@@ -71,18 +74,18 @@ let getByName = (elem)=>{
 // ---add button saved at local storage at MR or MIss---//
 function addedCardBtnLocalStorageFlag(){
     if(localStorage["dblCard"]){
-        if(localStorage["dblCard"] == "added"){
-            localStorage["dblCard"] = "removed";
+        if(localStorage["dblCard"] == "1"){
+            localStorage["dblCard"] = "2";
         }else{
-            localStorage["dblCard"] = "added";
+            localStorage["dblCard"] = "1";
         }
     }else{
-        localStorage.setItem("dblCard","added")
+        localStorage.setItem("dblCard","1")
     }
 }
 let checkAddedCardBtnLocalStorageFlag = ()=>{
     if(localStorage["dblCard"]){
-        if(localStorage["dblCard"]=="removed"){
+        if(localStorage["dblCard"]=="2"){
             document.querySelector("#id_add_card").click();
             addedCardBtnLocalStorageFlag();
         }
@@ -110,7 +113,7 @@ let countSelectFromLocal = ()=>{
     if(localStorage["countCards"]){
         document.querySelector("#id_select").value = localStorage["countCards"];
     }
-    cardCount();
+    // cardCount();
 }
 
 

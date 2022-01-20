@@ -24,20 +24,20 @@ window.onload = async function () {
         let mypromise = new Promise((resolve)=>{
                 checkLocalTitle();
                 countSelectFromLocal();
+                checkAddedCardBtnLocalStorageFlag();
                 resolve();
                 
         })
         mypromise.then(()=>{
+                titleCheck();
                 checkLocal();
                 checkLocalBtn();
-                titleCheck();
-                checkAddedCardBtnLocalStorageFlag();
                 
         })
         
         isSeed();
         if_dif();
-
+        dateOnCard();
 
 
 
@@ -69,7 +69,8 @@ window.onload = async function () {
                 changeFN();
                 changeLN();
                 changeCos();
-
+                cardCount(counterCardsOnMr);
+                console.log("mr");
         }
 
 
@@ -83,6 +84,7 @@ window.onload = async function () {
                 changeCom();
                 changeStrc();
                 changecoscom();
+                cardCount();
         }
 
         function onAssociation() {
@@ -94,6 +96,7 @@ window.onload = async function () {
                 empty();
                 changeAssc();
                 changecoscom();
+                cardCount();
 
         }
                 // --------card's changes---------//
@@ -231,10 +234,9 @@ function next() {
         }
         if (p == 3) {
                 document.getElementById("id_continue").classList.add("d-none");
-                // validaPart_2();
-
                 cards = document.querySelector("#id_select").value;
                 document.querySelector("#id_one_or_two").innerHTML = cards;
+                updateSelectConnectSummaryToLocalStorage();
                 mailDetails();
                 ibanSumm();
                 total();
@@ -243,8 +245,6 @@ function next() {
         if (p == 2) {
                 document.getElementById("id_per_dtl").classList.add("d-none");
                 document.getElementById("id_my_dtl").classList.remove("d-none");
-                cardCount();
-                // validaPart_1();  
         } else {
                 document.getElementById("id_per_dtl").classList.remove("d-none");
                 document.getElementById("id_my_dtl").classList.add("d-none");
@@ -302,26 +302,39 @@ if_dif = () => {
 }
 
 // ----------- add Card ---------------//
+let counterCardsOnMr
 function addNewCard() {
+        counterCardsOnMr = 2;
         document.querySelector("#id_added").classList.remove("d-none");
         document.querySelector("#id_label_custom_2").classList.remove("d-none");
         document.querySelector("#id_add_card").classList.add("d-none");
-        document.querySelector("#id_one_or_two").innerHTML = "2";
+        document.querySelector("#id_one_or_two").innerHTML = counterCardsOnMr ;
+        cardCount(counterCardsOnMr);
 }
 
 function deleteNewCard() {
+        counterCardsOnMr = 1;
         document.querySelector("#id_added").classList.add("d-none");
         document.querySelector("#id_label_custom_2").classList.add("d-none");
         document.querySelector("#id_add_card").classList.remove("d-none");
-        document.querySelector("#id_select").value = 1;
+        document.querySelector("#id_select").value = counterCardsOnMr;
+        cardCount(counterCardsOnMr);
 }
 
 
 
 
-function cardCount() {
+function cardCount(seedCount) {
 
-        let countCards = document.querySelector("#id_select").value;
+        let countCards;
+
+        if(seedCount){
+                countCards = seedCount;
+        }else{
+                countCards = document.querySelector("#id_select").value;
+        }
+
+        console.log(countCards);
         document.querySelector("#id_indicate").innerHTML =
           '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom(),addToLocalStorage(this)"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="french_span pointer"></span></label></div>';
       
@@ -402,7 +415,7 @@ function cardCount() {
           </span>
           <p id="id_fixed" class="m-0 ms-3">
               Fixed (upgrade corporate)
-                  <span  class="float-end">
+                  <span id="id_upgrade_auto" class="float-end">
                       8&euro;
                   </span>
           </p>
@@ -449,9 +462,9 @@ function cardCount() {
           </p>
           `;
         } else {
-          // document.querySelector("#id_fixed").classList.add("d-none")
       
-          document.querySelector("#id_summary_bill").innerHTML = `                            <span class="bg-light text-warning position-absolute rounded-circle px-2 py-1 cart">
+          document.querySelector("#id_summary_bill").innerHTML = `                            
+          <span class="bg-light text-warning position-absolute rounded-circle px-2 py-1 cart">
           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
           </span>
           <p id="id_card_1" class="m-0 ms-3">
@@ -487,26 +500,30 @@ function cardCount() {
         }
         console.log(ar_value);
         howMuch--;
-        document.querySelector("#id_select").value = howMuch;
-        if (
-          document.querySelector(`#id_Mr`).checked ||
-          document.querySelector(`#id_Mis`).checked
-        ) {
+        if (document.querySelector(`#id_Mr`).checked || document.querySelector(`#id_Mis`).checked) {
           deleteNewCard();
+        }else{
+                document.querySelector("#id_select").value = howMuch;
         }
       
         let promiseCard = new Promise(function (resolve) {
-          resolve(ar_value);
+                () => {
+                        for (let i = 1; i < ar_value.length; i++) {
+                          let y = document.querySelector(`#id_deposit_${i}`);
+                          y.value = ar_value[i];
+                          selectConnectSummary(y);
+                        }
+                }
+                resolve();
         });
-      
-        promiseCard.then(function (ar_value) {
-          for (let i = 1; i < ar_value.length; i++) {
-            let y = document.querySelector(`#id_deposit_${i}`);
-            y.value = ar_value[i];
-            selectConnectSummary(y);
-          }
+        
+        promiseCard.then(()=>{
+                cardCount();
+                total();
+                updateSelectConnectSummaryToLocalStorage();
+
         });
-        total();
+        
       }
       
       function zero(elem) {
@@ -529,6 +546,28 @@ function cardCount() {
           depo.innerHTML = `${val}&euro;`;
         }
       }
+
+
+      let updateSelectConnectSummaryToLocalStorage = () => {
+        let mrChecked = document.querySelector(`#id_Mr`).checked;
+        let missChecked = document.querySelector(`#id_Mis`).checked;
+        let count;
+        
+        if( mrChecked || missChecked ){
+                count = counterCardsOnMr;
+                console.log("counterCardsOnMr:"+count);
+        }else{
+                count = document.querySelector("#id_select").value;
+                console.log(`document.querySelector("#id_select").value:`+count);
+        }
+        for (let i = 1; i <= count; i++) {
+                let selectFirst = document.querySelector("#id_deposit_"+i);
+                console.log(selectFirst);
+                selectConnectSummary(selectFirst);
+        }
+}
+
+
       function ibanSummary(iban) {
         let ib = iban.id.slice(3,5);
         let ind = iban.id.slice(-1);
@@ -568,19 +607,27 @@ ibanSumm = () => {
 }
 // ---------- total------------//
 function total(){
-        let s = document.querySelector(`#id_select`).value ;
+        let s;
         let sum = 0;
-        let cards = parseInt(s, 10);
-        sum = 29.9 * cards;
-        if(document.querySelector(`#id_Mr`).checked || document.querySelector(`#id_Mis`).checked){
+        let mrChecked = document.querySelector(`#id_Mr`).checked;
+        let missChecked = document.querySelector(`#id_Mis`).checked;
+        if( mrChecked || missChecked ){
         }else{
-            sum +=8;
+                s = counterCardsOnMr;
+                s = document.querySelector(`#id_select`).value;
+                sum += 8 ;
         }
+        let cards = parseInt(s, 10);
+        sum += 29.9 * cards;
         for(let i = 1 ; i <= cards ; i++ ){
-            let depo = document.querySelector("#id_deposit_"+i).value;
-            let d = parseInt(depo, 10)
-            sum += d;
-        }
-        document.querySelector("#id_totalos").innerHTML = sum +"&euro;";
-        return sum;
+                let depo = document.querySelector("#id_deposit_"+i).value;
+                let d = parseInt(depo, 10)
+                sum += d;
+        }       
+
+
+
+        let print = sum.toFixed(2);
+        document.querySelector("#id_totalos").innerHTML = print +"&euro;";
+        return print;
     }
