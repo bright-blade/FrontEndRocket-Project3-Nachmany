@@ -12,6 +12,20 @@ function callAjax() {
             selectConnectSummary(document.querySelector("#id_deposit_1"));
         }
     })
+
+    function onMrMis() {
+        document.querySelector("#id_per_dtl").innerHTML = "personal details <p>&#8212;</p>";
+        document.querySelector("#id_dtl_of_prsn").classList.remove("d-none");
+        document.querySelector("#id_cprt").classList.add("d-none");
+        document.querySelector("#id_associ").classList.add("d-none");
+        document.querySelector("#id_card_account").classList.add("d-none");
+        empty();
+        changeFN();
+        changeLN();
+        changeCos();
+
+    }
+
 }
 
 function seedDetails() {

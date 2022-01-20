@@ -2,7 +2,7 @@ function validCoupon(inputCoupon){
     if(inputCoupon.value.length >= 2){
         document.querySelector("#id_coupon_btn").removeAttribute("disabled");
     }else{
-        document.querySelector("#id_coupon_btn").setAttribute("disabled"," disabled");
+        document.querySelector("#id_coupon_btn").setAttribute("disabled","disabled");
     }
 }
 
@@ -85,7 +85,8 @@ function addCouponToUrl(){
                         }
                       }, 1000);
                 
-
+                    document.querySelector("#id_coupon").setAttribute("disabled","disabled");
+                    document.querySelector("#id_coupon_btn").setAttribute("disabled","disabled");
                     playTheModal();
                     
                 }

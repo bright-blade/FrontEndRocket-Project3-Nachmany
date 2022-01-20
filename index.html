@@ -19,6 +19,7 @@
     <script src="js/bootstrap.bundle.js"></script>
     <script src="js/countdown.js"></script>
     <script src="js/coupon.js"></script>
+    <script src="js/localStorage.js"></script>
 </head>
 
 <body>
@@ -140,20 +141,20 @@
                             <div>
                                 <span class="text-capitalize me-3">title</span>
                                 <label class="text-capitalize me-3" for="id_Mr"><input type="radio" name="title"
-                                        id="id_Mr" class="prsn" onclick="onMrMis()"> mr</label>
+                                        id="id_Mr" class="prsn"> mr</label>
                                 <label class="text-capitalize me-3" for="id_Mis"><input type="radio" name="title"
-                                        id="id_Mis" class="prsn" onclick="onMrMis()"> mis</label>
+                                        id="id_Mis" class="prsn" > mis</label>
                                 <label class="text-capitalize me-3" for="id_corporate"><input type="radio" name="title"
-                                        id="id_corporate" onclick="onCorporate()"> corporate</label>
+                                        id="id_corporate"> corporate</label>
                                 <label class="text-capitalize me-3" for="id_association"><input type="radio"
-                                        name="title" id="id_association" onclick="onAssociation()"> association</label>
+                                        name="title" id="id_association"> association</label>
                             </div>
                             <div id="id_dtl_of_prsn">
                                 <div class="d-non container p-0 d-md-flex flex-wrap">
                                     <label for="id_first_name" class="mt-3 col-12 col-md-6 pe-md-2 order-0">
                                         <p id="id_p_first" class="mb-0 ">First Name</p>
                                         <input type="text" id="id_first_name" class="col-12 jx0"
-                                            oninput="longF(),changeFN(),validaFirst()" onblur="validaFirst()">
+                                            oninput="longF(),changeFN(),validaFirst(),addToLocalStorage(this)" onblur="validaFirst()">
                                         <div id="id_first_invalid" class="invalid-feedback d-none">
                                             this field is required.
                                         </div>
@@ -162,7 +163,7 @@
                                     <label for="id_last_name" class="mt-3 col-12 col-md-6 ps-md-2 order-1">
                                         <p id="id_p_last" class="mb-0">Last Name</p>
                                         <input type="text" id="id_last_name" class="col-12 jx1"
-                                            oninput="longF(),changeLN(),validaLast()" onblur="validaLast()">
+                                            oninput="longF(),changeLN(),validaLast(),addToLocalStorage(this)" onblur="validaLast()">
                                         <div id="id_last_invalid" class="invalid-feedback d-none">
                                             this field is required.
                                         </div>
@@ -170,23 +171,24 @@
 
                                     <label for="id_custom" class="mt-3 col-12 col-md-6 pe-md-2 order-2">
                                         <p class="mb-0">Custom Field</p>
-                                        <input type="text" id="id_custom" class="col-12 jx2" oninput="changeCos()">
+                                        <input type="text" id="id_custom" class="col-12 jx2" oninput="changeCos(),addToLocalStorage(this)">
                                     </label>
 
 
                                     <div class="mt-3 col-12 col-md-6 ps-md-2 order-3">
                                         <p class="mb-1">IBAN UK</p>
                                         <label for="id_uk_1">
-                                            <input id="id_uk_1" class="class_uk" type="radio" name="flag" onclick="ibanSummary(this)">
+                                            <input id="id_uk_1" class="class_uk" type="radio" name="flag" onchange="getByName(this)" onclick="ibanSummary(this)" checked>
                                             <span class="uk_span pointer"></span>
                                         </label>
                                         <label for="id_fr_1">
-                                            <input id="id_fr_1" class="class_fr" type="radio" name="flag" onclick="ibanSummary(this)">
+                                            <input id="id_fr_1" class="class_fr" type="radio" name="flag" onchange="getByName(this)" onclick="ibanSummary(this)">
                                             <span class="french_span pointer"></span>
                                         </label>
                                         <wrapper class="col-12">
-                                            <span id="id_add_card" onclick="addNewCard()"
-                                                class="pointer btn btn-primary float-end">Add Card</span>
+                                            <span id="id_add_card" onclick="addNewCard(),addedCardBtnLocalStorageFlag()" class="pointer btn btn-primary float-end">
+                                                Add Card
+                                            </span>
                                         </wrapper>
                                     </div>
                                     <label id="id_label_custom_2" for="id_custom2"
@@ -199,24 +201,25 @@
                                         <p class="mt-3 mb-1">IBAN UK</p>
 
                                         <label for="id_uk_2">
-                                            <input id="id_uk_2" class="class_uk" type="radio" name="flag2" onclick="ibanSummary(this)">
+                                            <input id="id_uk_2" class="class_uk" type="radio" name="flag2" onclick="ibanSummary(this)" onchange="getByName(this)" checked>
                                             <span class="uk_span pointer"></span>
                                         </label>
                                         <label for="id_french2">
-                                            <input id="id_french2" class="class_fr" type="radio" name="flag2" onclick="ibanSummary(this)"><span
+                                            <input id="id_french2" class="class_fr" type="radio" name="flag2" onclick="ibanSummary(this)" onchange="getByName(this)"><span
                                                 class="text-uppercase pointer french_span "></span>
                                         </label>
-                                        <wrapper class="">
-                                            <span id="id_delete" onclick="deleteNewCard()"
+                                        <wrapper>
+                                            <span id="id_delete" onclick="deleteNewCard(),addedCardBtnLocalStorageFlag()"
                                                 class="pointer btn btn-danger text-uppercase  float-end d-md-">Delete
-                                                Card</span>
+                                                Card
+                                            </span>
                                         </wrapper>
                                     </div>
                                     <label id="id_dbo_label_1" class="col-12 col-md-6 mt-3 pe-md-2 order-4"
                                         for="id_date_of_birdh_1">
                                         Date Of Birth
                                         <input id="id_date_of_birdh_1" class="d-block col-12 jx3" type="date"
-                                            oninput="validaDOB_1(this)" onblur="validaDOB_1(this)">
+                                            oninput="validaDOB_1(this),addToLocalStorage(this)" onblur="validaDOB_1(this)">
                                         <p class="small">(For example: 31/12/1970)</p>
                                         <div id="id_dbo_invalid_1" class="invalid-feedback d-none">
                                             Please enter a valid date.<br>
@@ -230,7 +233,7 @@
                                     <label for="id_company_name" class="col-12 col-md-6 pe-md-2 mt-3">
                                         <p id="id_p_company" class="mb-0">Company Name</p>
                                         <input type="text" id="id_company_name" class="col-12 jx4"
-                                            oninput="longC(),changeCom(),validaCompany()" onblur="validaCompany()">
+                                            oninput="longC(),changeCom(),validaCompany(),addToLocalStorage(this)" onblur="validaCompany()">
                                         <div id="id_company_invalid" class="invalid-feedback d-none">
                                             this field is required.
                                         </div>
@@ -239,7 +242,7 @@
                                     <label for="id_structure_name" class="col-12 col-md-6 ps-md-2 mt-3">
                                         <p id="id_p_structure" class="mb-0">Corporate Structure</p>
                                         <input type="text" id="id_structure_name" class="col-12 jx5"
-                                            oninput="longC(),changeStrc(),validaStructure()" onblur="validaStructure()">
+                                            oninput="longC(),changeStrc(),validaStructure(),addToLocalStorage(this)" onblur="validaStructure()">
                                         <div id="id_structure_invalid" class="invalid-feedback d-none">
                                             this field is required.
                                         </div>
@@ -249,7 +252,7 @@
                                         for="id_date_of_birdh_2">
                                         Date of birth person in charge
                                         <input id="id_date_of_birdh_2" class="col-12 jx3" type="date"
-                                            onblur="validaDOB_2(this)" oninput="validaDOB_2(this)">
+                                            onblur="validaDOB_2(this)" oninput="validaDOB_2(this),addToLocalStorage(this)">
                                         <p class="small">(For example: 31/12/1970)</p>
                                         <div id="id_dbo_invalid_2" class="invalid-feedback d-none">
                                             Please enter a valid date.<br>
@@ -263,7 +266,7 @@
                                     <label for="id_association_name" class="col-12 col-md-6 pe-md-2 mt-3">
                                         <p id="id_p_association" class="mb-0">Association Name</p>
                                         <input type="text" maxlength="20" id="id_association_name" class="col-12 jx6"
-                                            oninput="longA(),changeAssc(),validaAssociation()"
+                                            oninput="longA(),changeAssc(),validaAssociation(),addToLocalStorage(this)"
                                             onblur="validaAssociation()">
                                         <div id="id_association_invalid" class="invalid-feedback d-none">
                                             this field is required.
@@ -274,7 +277,7 @@
                                         for="id_date_of_birdh_3">
                                         Date Of Birth
                                         <input id="id_date_of_birdh_3" class="d-block col-12 jx3" type="date"
-                                            onblur="validaDOB_3(this)" oninput="validaDOB_3(this)">
+                                            onblur="validaDOB_3(this),addToLocalStorage(this)" oninput="validaDOB_3(this)">
                                         <p class="small">(For example: 31/12/1970)</p>
                                         <div id="id_dbo_invalid_3" class="invalid-feedback d-none">
                                             Please enter a valid date.<br>
@@ -291,7 +294,7 @@
                                         please specify the number of cards you would like.
                                         <div class="col-12 col-md-6 pe-md-2 mb-3">
                                             <select  id="id_select" class="col-12 form-select"
-                                                oninput="cardCount()">
+                                                oninput="cardCount(),countSelect(this)">
                                                 <option value="1">1 Card</option>
                                                 <option value="2">2 cards</option>
                                                 <option value="3">3 cards</option>
@@ -303,7 +306,7 @@
                                     </label>
 
                                     <input type="checkbox" name="customization" id="id_customization_check"
-                                        class="form-check-input d-md-inline">
+                                        class="form-check-input d-md-inline" onchange="addBtnToLocalStorage(this)">
                                     <label class=" d-md-inline" for="id_customization_check">
                                         <span class="ms-1"> customization & IBAN selection</span>
                                     </label>
@@ -311,17 +314,17 @@
                                     <div id="id_indicate" class="mt-3 align-items-end container col-12 p-0">
                                         <div class="me-3 me-md-0 col-8  col-md-6 pe-md-2">
                                             <label for="">Indicate here the desired customization</label>
-                                            <input id="id_here_1" class="jx2" type="text" oninput="changecoscom()">
+                                            <input id="id_here_1" class="jx2" type="text" oninput="changecoscom(),addToLocalStorage(this)">
                                         </div>
 
                                         <div id="id_card_label" class="col-4 col-md-6 ps-md-2">
                                             <p class="mb-0">IBAN UK</p>
                                             <label for="id_uk-1">
-                                                <input id="id_uk-1" class="class_uk" type="radio" name="flag">
+                                                <input id="id_uk-1" class="class_uk" type="radio" name="flag" onchange="getByName(this)">
                                                 <span class="uk_span pointer"></span>
                                             </label>
                                             <label for="id_french-1">
-                                                <input id="id_french-1" class="class_fr" type="radio" name="flag">
+                                                <input id="id_french-1" class="class_fr" type="radio" name="flag" onchange="getByName(this)">
                                                 <span class="french_span pointer"></span>
                                             </label>
 
@@ -333,7 +336,7 @@
                             <label for="id_i_do" class="d-flex align-items-end mt-3">
                                 <p class=""> I confirm that I have read and accepted the Legal Notice, General Terms and
                                     Conditions and Privacy Policy. </p>
-                                <input id="id_i_do" type="checkbox" name="i-do"><span class="noMargin pointer"></span>
+                                <input id="id_i_do" type="checkbox" name="i-do" onchange="addBtnToLocalStorage(this)"><span class="noMargin pointer"></span>
                             </label>
                         </div>
 
@@ -341,7 +344,7 @@
                             <div class="d-md-flex flex-md-wrap align-items-md-start">
                                 <label id="id_p_email" for="id_email_name" class="col-12">Email
                                     <input id="id_email_name" class="jx7" name="email" type="email"
-                                        oninput="validaEmail()" onblur="validaEmail(),correctedEmail()">
+                                        oninput="validaEmail(),addToLocalStorage(this)" onblur="validaEmail(),correctedEmail()">
                                     <span class="small"> (To connect to your Customer Area) </span>
                                     <div id="id_email_invalid" class="invalid-feedback d-none">
                                         this field is required.
@@ -361,10 +364,10 @@
                                                     aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <input id="id_suggest" name="corrected" type="radio"><label
+                                                <input id="id_suggest" name="corrected" type="radio" onchange="getByName(this)"><label
                                                     id="id_suggest_label" class="ms-1" for="id_suggest"></label>
                                                 <br>
-                                                <input id="id_wrong" name="corrected" type="radio"><label
+                                                <input id="id_wrong" name="corrected" type="radio" onchange="getByName(this)"><label
                                                     id="id_wrong_label" class="ms-1" for="id_wrong"></label>
                                             </div>
                                             <div class="modal-footer">
@@ -379,7 +382,7 @@
                                 <div class="col-12 mt-3 col-md-6 pe-md-2">
                                     <label for="id_area" class="col-12">
                                         Area Code
-                                        <select name="area_code" id="id_area" class="col-12 ">
+                                        <select name="area_code" id="id_area" class="col-12" onchange="addToLocalStorage(this)">
                                             <option value="uk">+44 (United Kingdom)</option>
                                             <option value="fra">+33 (France)</option>
                                             <option value="isra">+972 (Israel)</option>
@@ -389,7 +392,7 @@
                                 <label id="id_p_phone" for="id_phone_name" class="mt-3 col-12 col-md-6 ps-md-2">
                                     Phone Number
                                     <input id="id_phone_name" class="jx8" type="text" maxlength="11"
-                                        oninput="validaPhone()" onblur="validaPhone()">
+                                        oninput="validaPhone(),addToLocalStorage(this)" onblur="validaPhone()">
                                     <span class="small"> (To receive your PIN code) </span>
                                     <div id="id_phone_invalid" class="invalid-feedback d-none">
                                         Please, enter at least 2 characters.
@@ -403,12 +406,12 @@
                                 <h3 class="border-top col-12 mt-3 pt-3">RESIDENTIAL ADDRESS</h3>
 
                                 <input id="id_search" class="col-12 mt-3" type="text"
-                                    placeholder="Search for an address">
+                                    placeholder="Search for an address" oninput="addToLocalStorage(this)">
 
                                 <label id="id_p_address" for="id_address_name" class="mt-3 col-12 col-md-6 pe-md-2">
                                     Address
                                     <input id="id_address_name" class="jx9" type="text" maxlength="30"
-                                        oninput="validaAdress()" onblur="validaAdress()">
+                                        oninput="validaAdress(),addToLocalStorage(this)" onblur="validaAdress()">
                                     <div id="id_address_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                     </div>
@@ -417,13 +420,13 @@
 
                                 <label for="id_address_details" class="mt-3 col-12 col-md-6 ps-md-2">
                                     Additional Address Details
-                                    <input id="id_address_details" type="text" maxlength="30">
+                                    <input id="id_address_details" type="text" maxlength="30" oninput="addToLocalStorage(this)">
                                 </label>
 
                                 <label id="id_p_city" for="id_city_name" class="mt-3 col-12 col-md-4 pe-md-2">
                                     City
                                     <input id="id_city_name" class="jx10" type="text" maxlength="25"
-                                        oninput="validaCity()" onblur="validaCity()">
+                                        oninput="validaCity(),addToLocalStorage(this)" onblur="validaCity()">
                                     <div id="id_city_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                     </div>
@@ -432,7 +435,7 @@
                                 <label id="id_p_zip" for="id_zip_name" class="mt-3 col-12 col-md-4 px-md-1">
                                     Zip Code
                                     <input id="id_zip_name" class="jx11" type="text" maxlength="15"
-                                        oninput="validaZip()" onblur="validaZip()">
+                                        oninput="validaZip(),addToLocalStorage(this)" onblur="validaZip()">
                                     <div id="id_zip_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                     </div>
@@ -440,7 +443,7 @@
 
                                 <label for="id_country" class="mt-3 col-12 col-md-4 ps-md-2 jx12">
                                     Country
-                                    <select name="country" id="id_country" class="col-12 ">
+                                    <select name="country" id="id_country" class="col-12" onchange="addToLocalStorage(this)">
                                         <option value="united kingdom">United Kingdom</option>
                                         <option value="france">France</option>
                                         <option value="israel">Israel</option>
@@ -449,17 +452,17 @@
 
                                 <div class="mt-3 pt-3 col-12 dotted">
                                     <input type="checkbox" class="pointer" name="delivery" id="id_delivery"
-                                        onclick="if_dif()">
+                                        onclick="if_dif()" oninput="addBtnToLocalStorage(this)">
                                     <label for="id_delivery"> Delivery Address (if different)</label>
                                 </div>
                                 <input id="id_search2" class="col-12 mt-3 if_dif" type="text"
-                                    placeholder="Search for an address">
+                                    placeholder="Search for an address" oninput="addToLocalStorage(this)">
 
                                 <label id="id_p_address_del" class="mt-3 col-12 col-md-6 pe-md-2 if_dif"
                                     for="id_address_del_name">
                                     Address
                                     <input id="id_address_del_name" type="text" maxlength="30"
-                                        oninput="validaAdressDel()" onblur="validaAdressDel()">
+                                        oninput="validaAdressDel(),addToLocalStorage(this)" onblur="validaAdressDel()">
                                     <div id="id_address_del_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                     </div>
@@ -467,13 +470,13 @@
 
                                 <label class="mt-3 col-12 col-md-6 ps-md-2 if_dif" for="id_address_details_del">
                                     Additional Address Details
-                                    <input id="id_address_details_del" type="text" maxlength="35">
+                                    <input id="id_address_details_del" type="text" maxlength="35" oninput="addToLocalStorage(this)">
                                 </label>
 
                                 <label id="id_p_city_del" class="mt-3 col-12 col-md-4 pe-md-2 if_dif"
                                     for="id_city_del_name">
                                     City
-                                    <input id="id_city_del_name" type="text" maxlength="25" oninput="validaCityDel()"
+                                    <input id="id_city_del_name" type="text" maxlength="25" oninput="validaCityDel(),addToLocalStorage(this)"
                                         onblur="validaCityDel()">
                                     <div id="id_city_del_invalid" class="invalid-feedback d-none">
                                         This field is required.
@@ -483,7 +486,7 @@
                                 <label id="id_p_zip_del" class="mt-3 col-12 col-md-4 px-md-1 if_dif"
                                     for="id_zip_del_name">
                                     Zip Code
-                                    <input id="id_zip_del_name" type="text" maxlength="15" oninput="validaZipDel()"
+                                    <input id="id_zip_del_name" type="text" maxlength="15" oninput="validaZipDel(),addToLocalStorage(this)"
                                         onblur="validaZipDel()">
                                     <div id="id_zip_del_invalid" class="invalid-feedback d-none">
                                         This field is required.
@@ -491,7 +494,7 @@
                                 </label>
                                 <label class="mt-3 col-12 col-md-4 ps-md-2 if_dif" for="id_country_del">
                                     Country
-                                    <select name="country_del" id="id_country_del" class="col-12 if_dif">
+                                    <select name="country_del" id="id_country_del" class="col-12 if_dif" onchange="addToLocalStorage(this)">
                                         <option value="united_kingdom">United Kingdom</option>
                                         <option value="france">France</option>
                                         <option value="israel">Israel</option>
@@ -502,7 +505,7 @@
 
                                 <label class="mt-3 col-12 border-top pt-3" for="id_question">
                                     Secret Question
-                                    <select name="secret" id="id_question" class="col-12 jx13">
+                                    <select name="secret" id="id_question" class="col-12 jx13" onchange="addToLocalStorage(this)">
                                         <option value="mom">What is your mother's first name?</option>
                                         <option value="book">What is the name of your favorite book?</option>
                                         <option value="school">What is the name of your 1st school?</option>
@@ -514,7 +517,7 @@
                                 <label id="id_p_answer" class="mt-3 col-12" for="id_answer_name">
                                     Answer
                                     <input id="id_answer_name" class="jx14" name="answer" type="text" maxlength="22"
-                                        oninput="validaAnswer()" onblur="validaAnswer()">
+                                        oninput="validaAnswer(),addToLocalStorage(this)" onblur="validaAnswer()">
                                     <div id="id_answer_invalid" class="invalid-feedback d-none">
                                         This field is required.
                                         Please enter at least 5 characters.
@@ -523,7 +526,7 @@
                                 <div id="id_cards_count" class="mt-3 col-12">
                                     <label class="col-12" for="id_deposit_1">
                                         Card #1 First Deposit
-                                        <select name="deposit_1" id="id_deposit_1" class="col-12 jx15" onchange="selectConnectSummary(this)">
+                                        <select name="deposit_1" id="id_deposit_1" class="col-12 jx15" onchange="selectConnectSummary(this),addToLocalStorage(this)">
                                             <option value="0">0 &euro;</option>
                                             <option value="10">10 &euro;</option>
                                             <option value="20">20 &euro;</option>
@@ -542,7 +545,7 @@
 
                             <label class="d-flex justify-content-between" for="id_i_will">
                                 <p class="mt-1 mb-2"> I would like to receive exclusive offers from AMEX Card </p>
-                                <input type="checkbox" name="i_will" id="id_i_will"><span class="pointer"></span>
+                                <input type="checkbox" name="i_will" id="id_i_will" onchange="addBtnToLocalStorage(this)"><span class="pointer"></span>
                             </label>
 
                         </div>
