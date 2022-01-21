@@ -116,5 +116,14 @@ let countSelectFromLocal = ()=>{
     // cardCount();
 }
 
+let deleteItemFromLS = (_elem)=>{
+    console.log(_elem);
+    for (let i in save_ar) {
+        if(_elem.id==save_ar[i].id){
+            save_ar.splice(i, 1);
+        }
+    }
+    localStorage.setItem("customer",JSON.stringify(save_ar))
+}
 
 

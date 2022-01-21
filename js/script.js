@@ -338,16 +338,16 @@ function cardCount(seedCount) {
         document.querySelector("#id_indicate").innerHTML =
           '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_1" type="text" oninput="changecoscom(),addToLocalStorage(this)"></div><div id="id_card_label" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-1"><input id="id_uk-1" class="class_uk" type="radio" name="flag" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="uk_span pointer"></span></label><label for="id_french-1"><input id="id_french-1" class="class_fr" type="radio" name="flag" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="french_span pointer"></span></label></div>';
       
-        document.querySelector("#id_cards_count").innerHTML =
+          document.querySelector("#id_cards_count").innerHTML =
           '<label class="col-12" for="id_deposit_1">Card #1 First Deposit<select name="deposit_1" id="id_deposit_1" class="col-12 jx15" onchange="selectConnectSummary(this),addToLocalStorage(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
-      
-        billFixedUpgrade();
-        selectConnectSummary(document.querySelector("#id_deposit_1"));
-      
+          
+          billFixedUpgrade();
+          selectConnectSummary(document.querySelector("#id_deposit_1"));
+          
         for (let i = 2; i <= countCards; i++) {
-          document.querySelector("#id_indicate").innerHTML +=
-            '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_' +
-            i +
+                document.querySelector("#id_indicate").innerHTML +=
+                '<div class="me-3 me-md-0 col-8  col-md-6 pe-md-2"><label for="">Indicate here the desired customization</label><input id="id_here_' +
+                i +
             '" type="text" oninput="addToLocalStorage(this)"></div><div id="id_card_label' +
             i +
             '" class="col-4 col-md-6 ps-md-2"><p class="mb-0">IBAN UK</p><label for="id_uk-' +
@@ -363,8 +363,8 @@ function cardCount(seedCount) {
             '" class="class_fr" type="radio" name="flag' +
             i +
             '" onclick="ibanSummary(this)" onchange="getByName(this)"><span class="french_span pointer"></span></label></div>';
-      
-          document.querySelector("#id_cards_count").innerHTML +=
+            
+            document.querySelector("#id_cards_count").innerHTML +=
             '<label class="col-12 mt-3" for="id_deposit_' +
             i +
             '">Card #' +
@@ -374,29 +374,29 @@ function cardCount(seedCount) {
             '" id="id_deposit_' +
             i +
             '" class="col-12" onchange="selectConnectSummary(this),addToLocalStorage(this)"><option value="0">0 &euro;</option><option value="10">10 &euro;</option><option value="20">20 &euro;</option><option value="30">30 &euro;</option><option value="100">100 &euro;</option></select></label>';
-      
-          // let s =
-          let sVal = document.querySelector("#id_deposit_" + i).value;
-          document.querySelector("#id_summary_bill").innerHTML += `
-                  <p id="id_card_${i}" class="m-0">
-                  <i id="id_less_${i}" class="fa fa-trash-o text-danger pointer" onclick="lessOne(this)" aria-hidden="true"></i>
-                  1 X card (annual fees)<span id="id_iban_span_${i}"></span> 
-                  <span id="id_cost_card_${i}" class="float-end">
-                      29.90&euro;
-                  </span>
-              </p>
-              
-              <p id="id_first_deposit_${i}" class="m-0 ms-4 " >
-                  <i id="id_trash_${i}" class="fa fa-trash-o text-white pointer" onclick="zero(this)" aria-hidden="true"></i>
-                  First deposit
-                  <span id="id_depo_${i}" class="float-end">
-                  ${sVal}&euro;
-                  </span>
-              </p>
-                  `;
-          selectConnectSummary(document.querySelector("#id_deposit_" + i));
+            
+            // let s =
+            let sVal = document.querySelector("#id_deposit_" + i).value;
+            document.querySelector("#id_summary_bill").innerHTML += `
+            <p id="id_card_${i}" class="m-0">
+            <i id="id_less_${i}" class="fa fa-trash-o text-danger pointer" onclick="lessOne(this)" aria-hidden="true"></i>
+            1 X card (annual fees)<span id="id_iban_span_${i}"></span> 
+            <span id="id_cost_card_${i}" class="float-end">
+            29.90&euro;
+            </span>
+            </p>
+            
+            <p id="id_first_deposit_${i}" class="m-0 ms-4 " >
+            <i id="id_trash_${i}" class="fa fa-trash-o text-white pointer" onclick="zero(this)" aria-hidden="true"></i>
+            First deposit
+            <span id="id_depo_${i}" class="float-end">
+            ${sVal}&euro;
+            </span>
+            </p>
+            `;
+            selectConnectSummary(document.querySelector("#id_deposit_" + i));
         }
-
+        
         checkLocal();
 
       }
@@ -496,6 +496,8 @@ function cardCount(seedCount) {
             ar_value[i] = document.querySelector(`#id_deposit_${i}`).value;
           } else if (i > x) {
             ar_value[i - 1] = document.querySelector(`#id_deposit_${i}`).value;
+          }else{
+                deleteItemFromLS(document.querySelector(`#id_deposit_${i}`))
           }
         }
         console.log(ar_value);
@@ -503,26 +505,33 @@ function cardCount(seedCount) {
         if (document.querySelector(`#id_Mr`).checked || document.querySelector(`#id_Mis`).checked) {
           deleteNewCard();
         }else{
-                document.querySelector("#id_select").value = howMuch;
+                let select = document.querySelector("#id_select")
+                select.value = howMuch;
+                addToLocalStorage(select);
         }
+        for (let i = 1; i < ar_value.length; i++) {
+                let y = document.querySelector(`#id_deposit_${i}`);
+                y.value = ar_value[i];
+                addToLocalStorage(y);
+        }
+        cardCount();
+        total();
+        updateSelectConnectSummaryToLocalStorage();
       
-        let promiseCard = new Promise(function (resolve) {
-                () => {
-                        for (let i = 1; i < ar_value.length; i++) {
-                          let y = document.querySelector(`#id_deposit_${i}`);
-                          y.value = ar_value[i];
-                          selectConnectSummary(y);
-                        }
-                }
-                resolve();
-        });
+        // let promiseCard = new Promise(function (resolve) {
+        //         () => {
+        //                 for (let i = 1; i < ar_value.length; i++) {
+        //                   let y = document.querySelector(`#id_deposit_${i}`);
+        //                   y.value = ar_value[i];
+        //                 //   selectConnectSummary(y);
+        //                 }
+        //         }
+        //         resolve();
+        // });
         
-        promiseCard.then(()=>{
-                cardCount();
-                total();
-                updateSelectConnectSummaryToLocalStorage();
+        // promiseCard.then(()=>{
 
-        });
+        // });
         
       }
       
