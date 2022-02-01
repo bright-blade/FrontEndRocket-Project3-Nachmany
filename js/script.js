@@ -1,4 +1,4 @@
-window.onload = async function () {
+window.onload =  function () {
         console.log("js working");
         
         document.querySelector("#id_Mr").addEventListener("click",function(){
@@ -317,7 +317,8 @@ function deleteNewCard() {
         document.querySelector("#id_added").classList.add("d-none");
         document.querySelector("#id_label_custom_2").classList.add("d-none");
         document.querySelector("#id_add_card").classList.remove("d-none");
-        document.querySelector("#id_select").value = counterCardsOnMr;
+        document.querySelector("#id_one_or_two").innerHTML = counterCardsOnMr ;
+        // document.querySelector("#id_select").value = counterCardsOnMr;
         cardCount(counterCardsOnMr);
 }
 
@@ -330,6 +331,7 @@ function cardCount(seedCount) {
 
         if(seedCount){
                 countCards = seedCount;
+                console.log(countCards);
         }else{
                 countCards = document.querySelector("#id_select").value;
         }
@@ -503,18 +505,26 @@ function cardCount(seedCount) {
         console.log(ar_value);
         howMuch--;
         if (document.querySelector(`#id_Mr`).checked || document.querySelector(`#id_Mis`).checked) {
+
           deleteNewCard();
+          for (let i = 1; i < ar_value.length; i++) {
+                  let y = document.querySelector(`#id_deposit_${i}`);
+                  y.value = ar_value[i];
+                  addToLocalStorage(y);
+          }
+          cardCount(counterCardsOnMr);
+                
         }else{
                 let select = document.querySelector("#id_select")
                 select.value = howMuch;
-                addToLocalStorage(select);
+                countSelect(select);
+                for (let i = 1; i < ar_value.length; i++) {
+                        let y = document.querySelector(`#id_deposit_${i}`);
+                        y.value = ar_value[i];
+                        addToLocalStorage(y);
+                }
+                cardCount();
         }
-        for (let i = 1; i < ar_value.length; i++) {
-                let y = document.querySelector(`#id_deposit_${i}`);
-                y.value = ar_value[i];
-                addToLocalStorage(y);
-        }
-        cardCount();
         total();
         updateSelectConnectSummaryToLocalStorage();
       
@@ -621,8 +631,8 @@ function total(){
         let mrChecked = document.querySelector(`#id_Mr`).checked;
         let missChecked = document.querySelector(`#id_Mis`).checked;
         if( mrChecked || missChecked ){
-        }else{
                 s = counterCardsOnMr;
+        }else{
                 s = document.querySelector(`#id_select`).value;
                 sum += 8 ;
         }
